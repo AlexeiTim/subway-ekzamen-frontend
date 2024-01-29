@@ -20,6 +20,7 @@
     "element-plus": "^2.5.3",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",
+    "vue-final-modal": "^4.5.3",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
