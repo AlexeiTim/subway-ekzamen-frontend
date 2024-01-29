@@ -14,6 +14,7 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()]
     }),
     Components({
+      dts: true,
       resolvers: [ElementPlusResolver()]
     })
   ],
