@@ -5,7 +5,7 @@
         tag="h1"
         class="text-center"
       >
-        Авторизация
+        Регистрация
       </ElText>
       <ElForm
         :model="formData"
@@ -22,12 +22,12 @@
       <div class="flex items-center justify-between">
         <span>
           Ещё нет аккаунта?
-          <RouterLink :to="{ name: 'registration' }">
-            <ElLink>Зарегистрироваться</ElLink>
+          <RouterLink :to="{ name: 'login' }">
+            <ElLink>Войти</ElLink>
           </RouterLink>
         </span>
         <ElButton type="primary">
-          Войти
+          Зарегестрироваться
         </ElButton>
       </div>
     </div>
@@ -35,10 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 const formData = ref({
   username: '',
-  password: ''
+  password: '',
 });
 </script>

@@ -15,12 +15,20 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../pages/AboutPage.vue')
+      component: () => import('@/pages/AboutPage.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('../pages/LoginPage.vue')
+      component: () => import('@/pages/LoginPage.vue')
+    },
+    {
+      path: '/registration',
+      name: 'registration',
+      component: () => import('@/pages/RegistrationPage.vue'),
+      meta: {
+        permissions: 'all'
+      }
     }
   ]
 })
@@ -28,12 +36,13 @@ const router = createRouter({
 router.beforeEach((to) => {
   const token = localStorage.getItem('token')
 
+  if (to.meta.permissions === 'all') return true
+
   if (!token && to.name !== 'login')
     return {
       name: 'login'
     }
-  else
-    return true
+  return true
 })
 
 export default router
