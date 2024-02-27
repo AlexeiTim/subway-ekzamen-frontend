@@ -26,7 +26,10 @@
             <ElLink>Зарегистрироваться</ElLink>
           </RouterLink>
         </span>
-        <ElButton type="primary">
+        <ElButton
+          type="primary"
+          @click="handleLoginUser"
+        >
           Войти
         </ElButton>
       </div>
@@ -35,10 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useAuthentication } from '@/application/authentication';
+import { ref } from 'vue';
+
+const { authentication } = useAuthentication()
 
 const formData = ref({
   username: '',
   password: ''
-});
+})
+
+const handleLoginUser = async () => authentication(formData.value)
 </script>

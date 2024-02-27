@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { useAuthentication } from '@/application/authentication';
+
+const { logout } = useAuthentication()
+
+const handleUserLogout = () => logout()
 </script>
 
 <template>
@@ -7,6 +12,9 @@
     <h1 class="text-3xl font-bold underline">
       Hello world!
     </h1>
+    <ElButton @click="handleUserLogout">
+      Logout
+    </ElButton>
     <RouterLink :to="{ name: 'about' }">
       About
     </RouterLink>
