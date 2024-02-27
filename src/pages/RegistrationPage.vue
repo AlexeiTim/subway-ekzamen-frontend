@@ -26,7 +26,10 @@
             <ElLink>Войти</ElLink>
           </RouterLink>
         </span>
-        <ElButton type="primary">
+        <ElButton
+          type="primary"
+          @click="handleRegistration"
+        >
           Зарегестрироваться
         </ElButton>
       </div>
@@ -35,10 +38,15 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthentication } from '@/application/authentication';
 import { ref } from 'vue';
+
+const { registration } = useAuthentication()
 
 const formData = ref({
   username: '',
   password: '',
 });
+
+const handleRegistration = () => registration(formData.value)
 </script>
