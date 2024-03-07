@@ -1,16 +1,19 @@
 import axios from 'axios'
 import { ElNotification } from 'element-plus'
+import { TokenStorage } from '../storage/token'
 
 const csrfHeader = { 'X-CSRFToken': localStorage.getItem('token') }
 
 export const setToken = (newToken: string | null) => {
-  console.log(newToken)
+  const tokenStorage = new TokenStorage()
   axios.defaults.headers.common['Authorization'] = newToken ? `Token ${newToken}` : ''
-  newToken ? localStorage.setItem('token', newToken) : clearToken()
+  newToken ? tokenStorage.updateToken(newToken) : clearToken()
 }
 
 export const clearToken = () => {
-  localStorage.removeItem('token')
+  const tokenStorage = new TokenStorage()
+  tokenStorage.deleteToken()
+
   axios.defaults.headers.common['Authorization'] = ''
 }
 

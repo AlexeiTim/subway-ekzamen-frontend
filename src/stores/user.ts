@@ -1,4 +1,4 @@
-import type { User } from '@/domain/user'
+import type { User } from '@/types/user'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user-store', {
