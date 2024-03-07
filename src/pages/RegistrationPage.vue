@@ -8,15 +8,15 @@
         Регистрация
       </ElText>
       <ElForm
-        :model="formData"
+        :model="registrationData"
         label-position="top"
       >
         <ElFormItem label="Логин">
-          <ElInput v-model="formData.username" />
+          <ElInput v-model="registrationData.username" />
         </ElFormItem>
 
         <ElFormItem label="Пароль">
-          <ElInput v-model="formData.password" />
+          <ElInput v-model="registrationData.password" />
         </ElFormItem>
       </ElForm>
       <div class="flex items-center justify-between">
@@ -38,15 +38,35 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthentication } from '@/application/authentication';
+import { ROUTER_NAMES } from '@/constants/router';
+import { AuthService } from '@/services/api/rest/auth';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const { registration } = useAuthentication()
+const { registrationData, registration } = useRegistration()
 
-const formData = ref({
-  username: '',
-  password: '',
-});
+const handleRegistration = async () => await registration()
 
-const handleRegistration = () => registration(formData.value)
+function useRegistration() {
+  const authService = new AuthService()
+  const router = useRouter()
+
+  const registrationData = ref({
+    username: '',
+    password: '',
+  })
+
+  async function registration() {
+    const { data: user } = await authService.registration(registrationData.value)
+
+    if (!user) return
+    
+    router.push({ name: ROUTER_NAMES.LOGIN })
+  }
+
+  return {
+    registrationData,
+    registration
+  }
+}
 </script>
