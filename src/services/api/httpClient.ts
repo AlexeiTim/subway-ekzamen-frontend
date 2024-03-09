@@ -13,7 +13,7 @@ export interface IRequest {
   paramsSerializer?: (params: object | string) => string
 }
 
-const makeRequest = ({
+const makeRequest = <T>({
   url = '/',
   method = 'get',
   headers,
@@ -21,8 +21,8 @@ const makeRequest = ({
   data,
   responseType = 'json',
   paramsSerializer
-}: IRequest) =>
-  axios({
+}: IRequest): Promise<T> => {
+  return axios({
     url,
     method,
     responseType,
@@ -32,5 +32,7 @@ const makeRequest = ({
     paramsSerializer,
     withCredentials: false
   })
+}
+
 
 export default makeRequest
