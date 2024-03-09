@@ -7,7 +7,7 @@
         </h1>
         <ElInput class="w-auto mt-2" />
       </div>
-
+      <!-- Список экзаменов -->
       <div class="bg-white rounded h-full overflow-hidden">
         <div class="bg-slate-400 border-2 p-2">
           Какой-то экзамен
