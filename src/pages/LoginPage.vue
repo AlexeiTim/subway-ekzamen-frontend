@@ -71,9 +71,7 @@ const { login, loginData } = useLogin()
 async function checkValidForm() {
   if (!formRef.value) return
 
-  const isValid = await formRef.value?.validate(isValid => isValid)
-  if (!isValid) return false
-  return true
+  return await formRef.value?.validate(isValid => isValid)
 }
 
 const handleLogin = async () => {
