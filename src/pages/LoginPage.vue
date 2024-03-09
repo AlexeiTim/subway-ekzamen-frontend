@@ -46,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { ERRORS } from '@/constants/errors';
 import { ROUTER_NAMES } from '@/constants/router';
 import { generateWelcomeMessage } from '@/helpers/generateWelcomeMessage';
 import { setToken } from '@/services/api/config';
@@ -54,7 +53,7 @@ import { AuthService } from '@/services/api/rest/auth';
 import { UserService } from '@/services/api/rest/user';
 import { NotificationService } from '@/services/notify/notification';
 import { useUserStore } from '@/stores/user';
-import validator from '@/utils/validator';
+import { Validator } from '@/utils/validator';
 import type { FormInstance, FormRules } from 'element-plus';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -62,8 +61,8 @@ import { useRouter } from 'vue-router';
 const formRef = ref<FormInstance>()
 
 const formRules = ref<FormRules>({
-  username: [{ validator: validator.notEmptyField, trigger: 'blur'}],
-  password: [{ validator: validator.notEmptyField, trigger: 'blur'}]
+  username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
+  password: [{ validator: Validator.notEmptyField, trigger: 'blur'}]
 })
 
 const { login, loginData } = useLogin()
@@ -89,26 +88,22 @@ function useLogin() {
   const router = useRouter()
 
   const loginData = ref({
-    username: '',
-    password: '',
+    username: 'timashkov',
+    password: 'pycSywdN',
   })
 
   async function login() {
-    const { username, password } = loginData.value
-
     try {
-      const { data: authData } = await authService.login({ username, password })
+      const { data } = await authService.login(loginData.value)
+      if (!data) return alert('bad request')
 
-      if (!authData) return alert('bad request')
-
-      setToken(authData.auth_token)
+      setToken(data.auth_token)
     } catch (e) {
-      return console.log(ERRORS.NOT_AUTHORIZATION)
+      notificationService.error(JSON.stringify(e))
     }
 
     try {
       const { data: user } = await userService.getCurrentUser()
-
       if (!user) return alert('dont have user')
 
       userStore.updateUser(user)
@@ -117,7 +112,7 @@ function useLogin() {
       const welcomeMessage = generateWelcomeMessage(user.username)
       notificationService.success(welcomeMessage)
     } catch (e) {
-      return console.log(ERRORS.NOT_AUTHORIZATION)
+      notificationService.error(JSON.stringify(e))
     }
   }
 
