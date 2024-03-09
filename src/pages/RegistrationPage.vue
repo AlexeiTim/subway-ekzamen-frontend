@@ -60,9 +60,7 @@ const formRef = ref<FormInstance>()
 const { registrationData, registration } = useRegistration()
 
 const handleRegistration = async () => {
-  if (!formRef.value) return
-
-  const isValid = await formRef.value?.validate((valid) => valid)
+  const isValid = await checkValidForm()
   if (!isValid) return
 
   await registration()
@@ -72,6 +70,12 @@ const formRules = ref<FormRules>({
   username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
   password: [{ validator: Validator.notEmptyField, trigger: 'blut'}]
 })
+
+async function checkValidForm() {
+  if (!formRef.value) return
+
+  return await formRef.value.validate((isValid) => isValid)
+}
 
 function useRegistration() {
   const authService = new AuthService()
@@ -97,4 +101,8 @@ function useRegistration() {
     registration
   }
 }
+
+defineExpose({
+  checkValidForm
+})
 </script>
