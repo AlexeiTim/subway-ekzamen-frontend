@@ -50,7 +50,7 @@ import { REGISTRATION_MESSAGES } from '@/constants/auth';
 import { ROUTER_NAMES } from '@/constants/router';
 import { AuthService } from '@/services/api/rest/auth';
 import { NotificationService } from '@/services/notify/notification';
-import Validator from '@/utils/validator';
+import { Validator } from '@/utils/validator';
 import type { FormInstance, FormRules } from 'element-plus';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
