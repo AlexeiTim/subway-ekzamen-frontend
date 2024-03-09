@@ -1,6 +1,6 @@
 import { VALIDATOR_ERRORS } from "@/constants/errors"
 
-class Validator {
+class ElementPlusValidator {
 
   notEmptyField(_: any, text: string, callback: any) {
     if (text.length > 0) return callback()
@@ -9,4 +9,4 @@ class Validator {
 }
 
 
-export default new Validator()
+export const Validator =  new ElementPlusValidator()
