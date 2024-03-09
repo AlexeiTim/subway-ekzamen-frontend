@@ -12,3 +12,9 @@ export interface BaseApi {
 
   create(data: any): Promise<any>
 }
+
+export interface BaseFakeApi extends BaseApi {}
+
+export interface BaseResponse<T> {
+  data: T
+}
