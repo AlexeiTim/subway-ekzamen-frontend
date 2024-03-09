@@ -3,3 +3,7 @@ export const AUTH_ENDPOINTS = {
   REGISTRATION: '/users/',
   LOGOUT: '/token/logout/'
 }
+
+export const REGISTRATION_MESSAGES = {
+  SUCCESS: 'Регистрация прошла успешно!'
+}
