@@ -1,16 +1,11 @@
 import { AUTH_ENDPOINTS } from '@/constants/auth'
 import { API_METHODS } from '@/constants/service'
-import type { AuthData } from '@/types/auth'
+import type { AuthData, LoginResponse, RegistrationReponse } from '@/types/auth'
 import makeRequest from '../httpClient'
-import { BaseApiSerivce } from './base'
 
-export class AuthService extends BaseApiSerivce {
-  constructor(endpoint: string = '', methods = []) {
-    super(endpoint, methods)
-  }
-
+export class AuthService {
   login(data: AuthData) {
-    return makeRequest({
+    return makeRequest<LoginResponse>({
       url: AUTH_ENDPOINTS.LOGIN,
       method: API_METHODS.CREATE,
       data
@@ -18,7 +13,7 @@ export class AuthService extends BaseApiSerivce {
   }
 
   registration(data: AuthData) {
-    return makeRequest({
+    return makeRequest<RegistrationReponse>({
       url: AUTH_ENDPOINTS.REGISTRATION,
       method: API_METHODS.CREATE,
       data

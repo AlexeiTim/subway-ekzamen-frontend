@@ -8,14 +8,22 @@
         Регистрация
       </ElText>
       <ElForm
+        ref="formRef"
         :model="registrationData"
+        :rules="formRules"
         label-position="top"
       >
-        <ElFormItem label="Логин">
+        <ElFormItem
+          label="Логин"
+          prop="username"
+        >
           <ElInput v-model="registrationData.username" />
         </ElFormItem>
 
-        <ElFormItem label="Пароль">
+        <ElFormItem
+          label="Пароль"
+          prop="password"
+        >
           <ElInput v-model="registrationData.password" />
         </ElFormItem>
       </ElForm>
@@ -38,17 +46,40 @@
 </template>
 
 <script setup lang="ts">
+import { REGISTRATION_MESSAGES } from '@/constants/auth';
 import { ROUTER_NAMES } from '@/constants/router';
 import { AuthService } from '@/services/api/rest/auth';
+import { NotificationService } from '@/services/notify/notification';
+import { Validator } from '@/utils/validator';
+import type { FormInstance, FormRules } from 'element-plus';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const formRef = ref<FormInstance>()
+
 const { registrationData, registration } = useRegistration()
 
-const handleRegistration = async () => await registration()
+const handleRegistration = async () => {
+  const isValid = await checkValidForm()
+  if (!isValid) return
+
+  await registration()
+}
+
+const formRules = ref<FormRules>({
+  username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
+  password: [{ validator: Validator.notEmptyField, trigger: 'blut'}]
+})
+
+async function checkValidForm() {
+  if (!formRef.value) return
+
+  return await formRef.value.validate((isValid) => isValid)
+}
 
 function useRegistration() {
   const authService = new AuthService()
+  const notificationService = new NotificationService()
   const router = useRouter()
 
   const registrationData = ref({
@@ -62,6 +93,7 @@ function useRegistration() {
     if (!user) return
     
     router.push({ name: ROUTER_NAMES.LOGIN })
+    notificationService.success(REGISTRATION_MESSAGES.SUCCESS)
   }
 
   return {
@@ -69,4 +101,8 @@ function useRegistration() {
     registration
   }
 }
+
+defineExpose({
+  checkValidForm
+})
 </script>

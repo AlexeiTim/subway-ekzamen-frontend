@@ -1,3 +1,3 @@
 export const PERMISSION = {
-  PUBLIC: 'all'
+  PUBLIC: 'public'
 }

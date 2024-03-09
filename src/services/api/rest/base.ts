@@ -2,7 +2,7 @@ import { API_METHODS, SERVICE_METHOD_ERRORS } from '@/constants/service'
 import type { BaseApi } from '@/types/api'
 import makeRequest from '../httpClient'
 
-export class BaseApiSerivce implements BaseApi {
+export class BaseApiSerivce<T> implements BaseApi {
   constructor(
     public endpoint: string = '',
     public methods: string[] = [
@@ -17,48 +17,48 @@ export class BaseApiSerivce implements BaseApi {
     this.methods = methods
   }
 
-  public getOne(id: string | number): Promise<any> {
+  public getOne(id: string | number): Promise<T> {
     if (!this.methods.includes(API_METHODS.GET)) throw new Error(SERVICE_METHOD_ERRORS.GET)
 
-    return makeRequest({
+    return makeRequest<T>({
       url: `${this.endpoint}/${id}/`
     })
   }
 
-  public getAll(params: any): Promise<any> {
+  public getAll(params: Partial<T> = {}): Promise<T[]> {
     if (!this.methods.includes(API_METHODS.GET)) throw new Error(SERVICE_METHOD_ERRORS.GET)
 
-    return makeRequest({
+    return makeRequest<T[]>({
       url: this.endpoint,
       params
     })
   }
 
-  public update(id: string | number, data: any): Promise<any> {
+  public update(id: string | number, data: Omit<T, 'id'>): Promise<T> {
     if (
       !this.methods.includes(API_METHODS.PARTIAL_UPDATE) ||
       !this.methods.includes(API_METHODS.UPDATE)
     )
       throw new Error(SERVICE_METHOD_ERRORS.UPDATE)
 
-    return makeRequest({
+    return makeRequest<T>({
       url: `${this.endpoint}/${id}/`,
       data
     })
   }
 
-  public delete(id: string | number): Promise<any> {
+  public delete(id: string | number): Promise<T> {
     if (!this.methods.includes(API_METHODS.DELETE)) throw new Error(SERVICE_METHOD_ERRORS.DELETE)
 
-    return makeRequest({
+    return makeRequest<T>({
       url: `${this.endpoint}/${id}/`
     })
   }
 
-  public create(data: any): Promise<any> {
+  public create(data: Partial<T>): Promise<T> {
     if (!this.methods.includes(API_METHODS.CREATE)) throw new Error(SERVICE_METHOD_ERRORS.CREATE)
 
-    return makeRequest({
+    return makeRequest<T>({
       url: this.endpoint,
       data
     })
