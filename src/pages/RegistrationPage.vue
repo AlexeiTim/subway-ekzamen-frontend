@@ -59,14 +59,12 @@ import { Validator } from '@/utils/validator';
 import type { FormInstance, FormRules } from 'element-plus';
 import { ref } from 'vue';
 
+const { registration } = useRegistration()
 
 const registrationData = ref({
   username: '',
   password: ''
 })
-
-const { registration } = useRegistration()
-
 const formRef = ref<FormInstance>()
 const formRules = ref<FormRules>({
   username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
