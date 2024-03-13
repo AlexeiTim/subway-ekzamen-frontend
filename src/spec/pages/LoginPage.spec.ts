@@ -2,7 +2,7 @@ import { useLogin } from "@/composables/useLogin";
 import LoginPage from "@/pages/LoginPage.vue";
 import { mount, type VueWrapper } from "@vue/test-utils";
 import ElementPlus from 'element-plus';
-import { describe, it, vi, type Mock } from "vitest";
+import { describe, expect, it, vi, type Mock } from "vitest";
 
 vi.mock('vue-router')
 vi.mock('@/composables/useLogin')
@@ -41,6 +41,6 @@ describe('LoginPage', () => {
     })
     createComponent()
 
-    // expect(wrapper.exists()).toBe(true)
+    expect(wrapper.exists()).toBe(true)
   })
 })
