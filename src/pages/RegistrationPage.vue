@@ -17,14 +17,21 @@
           label="Логин"
           prop="username"
         >
-          <ElInput v-model="registrationData.username" />
+          <ElInput
+            ref="usernameField"
+            v-model="registrationData.username"
+            data-testid="username-input"
+          />
         </ElFormItem>
 
         <ElFormItem
           label="Пароль"
           prop="password"
         >
-          <ElInput v-model="registrationData.password" />
+          <ElInput
+            v-model="registrationData.password"
+            data-testid="password-input"
+          />
         </ElFormItem>
       </ElForm>
       <div class="flex items-center justify-between">
@@ -36,6 +43,7 @@
         </span>
         <ElButton
           type="primary"
+          data-testid="submit-button"
           @click="handleRegistration"
         >
           Зарегестрироваться
@@ -46,63 +54,35 @@
 </template>
 
 <script setup lang="ts">
-import { REGISTRATION_MESSAGES } from '@/constants/auth';
-import { ROUTER_NAMES } from '@/constants/router';
-import { AuthService } from '@/services/api/rest/auth';
-import { NotificationService } from '@/services/notify/notification';
+import { useRegistration } from '@/composables/useRegistration';
 import { Validator } from '@/utils/validator';
 import type { FormInstance, FormRules } from 'element-plus';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+
+
+const registrationData = ref({
+  username: '',
+  password: ''
+})
+
+const { registration } = useRegistration()
 
 const formRef = ref<FormInstance>()
-
-const { registrationData, registration } = useRegistration()
+const formRules = ref<FormRules>({
+  username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
+  password: [{ validator: Validator.notEmptyField, trigger: 'blur'}]
+})
 
 const handleRegistration = async () => {
   const isValid = await checkValidForm()
   if (!isValid) return
 
-  await registration()
+  await registration(registrationData.value)
 }
-
-const formRules = ref<FormRules>({
-  username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
-  password: [{ validator: Validator.notEmptyField, trigger: 'blut'}]
-})
 
 async function checkValidForm() {
   if (!formRef.value) return
 
   return await formRef.value.validate((isValid) => isValid)
 }
-
-function useRegistration() {
-  const authService = new AuthService()
-  const notificationService = new NotificationService()
-  const router = useRouter()
-
-  const registrationData = ref({
-    username: '',
-    password: '',
-  })
-
-  async function registration() {
-    const { data: user } = await authService.registration(registrationData.value)
-
-    if (!user) return
-    
-    router.push({ name: ROUTER_NAMES.LOGIN })
-    notificationService.success(REGISTRATION_MESSAGES.SUCCESS)
-  }
-
-  return {
-    registrationData,
-    registration
-  }
-}
-
-defineExpose({
-  checkValidForm
-})
 </script>

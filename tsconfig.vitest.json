@@ -8,5 +8,9 @@
       "node",
       "jsdom"
     ]
-  }
+  },
+  "include": [
+    "src/**/*",
+    "spec/**/*"
+  ]
 }
