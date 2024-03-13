@@ -1,29 +1,29 @@
 import { useLogin } from "@/composables/useLogin";
 import LoginPage from "@/pages/LoginPage.vue";
+import type { AuthData } from "@/types/auth";
 import { mount, type VueWrapper } from "@vue/test-utils";
-import ElementPlus from 'element-plus';
+import ElementPlus, { type FormInstance, type FormRules } from 'element-plus';
 import { describe, expect, it, vi, type Mock } from "vitest";
 
 vi.mock('vue-router')
 vi.mock('@/composables/useLogin')
 
-// interface ComponentSetup {
-//   formRef: FormInstance,
-//   formRules: FormRules,
-//   login: () => Promise<void>,
-//   loginData: AuthData,
-//   checkValidForm: () => boolean,
-//   handleLogin: () => Promise<void>,
-//   useLogin: () => {
-//     loginData: AuthData,
-//     login: () => Promise<void>
-//   },
-// }
+interface ComponentSetup {
+  formRef: FormInstance,
+  formRules: FormRules,
+  login: () => Promise<void>,
+  loginData: AuthData,
+  checkValidForm: () => boolean,
+  handleLogin: () => Promise<void>,
+  useLogin: () => {
+    login: () => Promise<void>
+  },
+}
 
-// type Wrapper = VueWrapper<ComponentSetup>
+type Wrapper = VueWrapper<ComponentSetup>
 
 describe('LoginPage', () => {
-  let wrapper: VueWrapper
+  let wrapper: Wrapper
 
   function createComponent(options = {}, stubs = []) {
     wrapper = mount(LoginPage, {
@@ -32,7 +32,7 @@ describe('LoginPage', () => {
         plugins: [ElementPlus],
         stubs: ['RouterLink', 'ElInput', ...stubs],
       },
-    })
+    }) as Wrapper
   }
 
   it('rendered', () => {
