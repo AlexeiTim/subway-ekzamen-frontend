@@ -14,7 +14,7 @@ interface ComponentData {
   handleRegistration: Promise<void>,
   checkValidForm: boolean
 }
-type ComponentWrapper = VueWrapper<Partial<{}> & ComponentData>;
+type ComponentWrapper = VueWrapper<ComponentData>;
 
 describe('Registration Page', async () => {
   let wrapper: ComponentWrapper
