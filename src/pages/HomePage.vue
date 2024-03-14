@@ -1,26 +1,27 @@
 <template>
-  <div class="flex w-full h-full gap-4 pb-10">
-    <div class="flex flex-col flex-grow">
-      <div class="flex items-center gap-4">
-        <h1 class="text-[52px] text-nowrap text-[yellow]">
-          Выберите экзамен
-        </h1>
-        <ElInput class="w-auto mt-2" />
-      </div>
+  <LayoutDashboard>
+    <template #title>
+      <h1>
+        Выберите экзамен
+      </h1>
+    </template>
+    <template #search>
+      <ElInput />
+    </template>
+    <template #list>
       <ExamList />
-    </div>
-
-    
-    <div class="flex flex-col justify-between">
+    </template>
+    <template #buttons>
       <div class="flex flex-col">
         <ElButton>ОК</ElButton>
         <ElButton>Отмена</ElButton>
       </div>
       <ElButton>Об экзамене</ElButton>
-    </div>
-  </div>
+    </template>
+  </LayoutDashboard>
 </template>
 
 <script lang="ts" setup>
 import ExamList from '@/components/Home/ExamList.vue';
+import LayoutDashboard from '@/layouts/LayoutDashboard.vue';
 </script>

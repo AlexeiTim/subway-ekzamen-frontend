@@ -4,10 +4,11 @@ import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import { createVfm } from 'vue-final-modal'
 
-import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'vue-final-modal/style.css'
+import './styles/styles.css'
 
 import App from './App.vue'
 import router from './router'

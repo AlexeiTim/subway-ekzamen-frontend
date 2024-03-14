@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="bg-white rounded h-full overflow-hidden"
-  >
+  <div>
     <ExamItem
       v-for="exam in exams"
       :key="exam.id"
