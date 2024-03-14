@@ -1,7 +1,10 @@
 <template>
-  <div class="bg-slate-400 border-2 p-2">
+  <ElButton
+    type="info"
+    style="margin-left: 0; height: 40px; justify-content: start;"
+  >
     {{ props.exam.name }}
-  </div>
+  </ElButton>
 </template>
 
 <script lang="ts" setup>

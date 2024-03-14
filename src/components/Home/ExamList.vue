@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col gap-1">
     <ExamItem
       v-for="exam in exams"
       :key="exam.id"
