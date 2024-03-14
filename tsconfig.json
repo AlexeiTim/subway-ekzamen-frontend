@@ -13,6 +13,8 @@
   ],
   "compilerOptions": {
     "module": "NodeNext",
-    "types": ["element-plus/global"]
+    "types": [
+      "element-plus/global"
+    ]
   }
 }
