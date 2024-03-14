@@ -10,10 +10,14 @@
       <slot name="list" />
     </div>
     <div class="buttons">
-      <div class="flex flex-col justify-between h-full">
-        <slot
-          name="buttons"
-        />
+      <div class="button-ok">
+        <slot name="button-ok" />
+      </div>
+      <div>
+        <slot name="button-cancel" />
+      </div>
+      <div class="button-count">
+        <slot name="button-count" />
       </div>
     </div>
     <div class="empty" />
@@ -38,8 +42,35 @@
   grid-area: buttons;
 }
 
+.empty-button {
+  grid-area: empty-button;
+}
+
 .empty {
   grid-area: empty
+}
+
+:deep(.el-button) {
+  width: 100%;
+}
+
+.button-ok {
+  grid-area: button-ok
+}
+
+.button-cancel {
+  grid-area: button-cancel;
+}
+
+.button-count {
+  grid-area: button-count;
+  margin-top: auto;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .layout {
@@ -59,13 +90,22 @@
     display: none;
   }
 
-  .buttons > div {
-    display: flex;
+    .button-count {
+    margin-top: 0;
   }
+
+  .buttons {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .buttons > div {
+    flex-basis: 30%;
+  } 
 
   .layout {
     grid-template-columns: 12fr;
-    grid-template-rows: 100px 100px 100px auto;
+    grid-template-rows: 50px 50px 50px auto;
     grid-template-areas: 
     "title"
     "buttons"
@@ -77,7 +117,7 @@
 
 @media (max-width: 482px) {
   .layout {
-    grid-template-rows: 100px 100px auto 100px;
+    grid-template-rows: 50px 50px auto 50px;
     grid-template-areas: 
     "title"
     "search"

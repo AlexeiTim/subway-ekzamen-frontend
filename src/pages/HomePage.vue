@@ -11,11 +11,13 @@
     <template #list>
       <ExamList />
     </template>
-    <template #buttons>
-      <div class="flex flex-col">
-        <ElButton>ОК</ElButton>
-        <ElButton>Отмена</ElButton>
-      </div>
+    <template #button-ok>
+      <ElButton>ОК</ElButton>
+    </template>
+    <template #button-cancel>
+      <ElButton>Отмена</ElButton>
+    </template>
+    <template #button-count>
       <ElButton>Об экзамене</ElButton>
     </template>
   </LayoutDashboard>
