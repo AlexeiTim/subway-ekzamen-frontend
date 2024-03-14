@@ -27,10 +27,10 @@
 <style scoped>
 .title {
   grid-area: title;
-  font-size: 32px;
 }
 
 .search {
+  margin-top: 10px;
   grid-area: search;
 }
 
@@ -54,20 +54,12 @@
   width: 100%;
 }
 
-.button-ok {
-  grid-area: button-ok
-}
-
-.button-cancel {
-  grid-area: button-cancel;
-}
-
 .button-count {
-  grid-area: button-count;
   margin-top: auto;
 }
 
 .buttons {
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -77,6 +69,7 @@
   height: 100%;
   display: grid;
   gap: 10px;
+  align-items: center;
   grid-template-columns: 5fr 5fr 2fr;
   grid-template-rows: 100px auto;
   padding-bottom: 20px;
@@ -86,11 +79,15 @@
 }
 
 @media (max-width: 834px) {
+  .title {
+    text-align: center;
+  }
+
   .empty {
     display: none;
   }
 
-    .button-count {
+  .button-count {
     margin-top: 0;
   }
 
@@ -100,12 +97,12 @@
   }
 
   .buttons > div {
-    flex-basis: 30%;
+    flex-basis: 32%;
   } 
 
   .layout {
     grid-template-columns: 12fr;
-    grid-template-rows: 50px 50px 50px auto;
+    grid-template-rows: 100px 50px 50px auto;
     grid-template-areas: 
     "title"
     "buttons"
@@ -116,6 +113,10 @@
 }
 
 @media (max-width: 482px) {
+  .title {
+    font-size: 32px;
+  }
+
   .layout {
     grid-template-rows: 50px 50px auto 50px;
     grid-template-areas: 
