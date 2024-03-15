@@ -18,7 +18,7 @@ export const clearToken = () => {
 
 const mapUrl = {
   local: `${import.meta.env.VITE_APP_API_URL}`,
-  prod: `${window.location.origin}/api`
+  prod: `https://subway-ekzament-backend.onrender.com/api`
 }
 
 const apiBaseURL = window.location.hostname === 'localhost' ? mapUrl.local : mapUrl.prod
