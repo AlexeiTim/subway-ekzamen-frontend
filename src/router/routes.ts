@@ -25,5 +25,10 @@ export const routes = [
     meta: {
       permissions: PERMISSION.PUBLIC
     }
+  },
+  {
+    path: ROUTER_PATHES.EXAM_THEMES,
+    name: ROUTER_NAMES.EXAM_THEMES,
+    component: () => import('@/pages/ExamThemesPage.vue')
   }
 ]
