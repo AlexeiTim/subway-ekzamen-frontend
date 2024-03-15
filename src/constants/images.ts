@@ -1,4 +1,4 @@
-import MAIN_BACKGROUND from '../../public/images/main-bg.jpg'
+import MAIN_BACKGROUND from './../assets/images/main-bg.jpg'
 
 export const IMAGES = {
   MAIN_BACKGROUND
