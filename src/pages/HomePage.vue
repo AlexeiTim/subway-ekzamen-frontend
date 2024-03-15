@@ -6,7 +6,7 @@
       </h1>
     </template>
     <template #search>
-      <ElInput />
+      <SearchExam />
     </template>
     <template #list>
       <ExamList />
@@ -25,8 +25,9 @@
 
 <script lang="ts" setup>
 import ButtonCancel from '@/components/Home/ButtonCancel.vue';
-import ButtonGoToExamThemes from '@/components/Home/ButtonGoToExamThemes.vue';
 import ButtonExamInfo from '@/components/Home/ButtonExamInfo.vue';
+import ButtonGoToExamThemes from '@/components/Home/ButtonGoToExamThemes.vue';
 import ExamList from '@/components/Home/ExamList.vue';
+import SearchExam from '@/components/Home/SearchExam.vue';
 import LayoutDashboard from '@/layouts/LayoutDashboard.vue';
 </script>
