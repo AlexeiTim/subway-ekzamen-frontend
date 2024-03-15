@@ -1,9 +1,11 @@
 <template>
-  <div class="flex items-center justify-end bg-white p-4">
+  <div class="flex items-center justify-between bg-white p-4">
+    <ButtonGoBack />
     <ButtonLogout />
   </div>
 </template>
 
 <script setup lang="ts">
-import ButtonLogout from '../Buttons/ButtonLogout.vue';
+import ButtonGoBack from '@/components/Buttons/ButtonGoBack.vue';
+import ButtonLogout from '@/components/Buttons/ButtonLogout.vue';
 </script>
