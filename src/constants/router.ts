@@ -2,14 +2,16 @@ export const ROUTER_NAMES = {
   HOME: 'home',
   ABOUT: 'about',
   LOGIN: 'login',
-  REGISTRATION: 'registration'
+  REGISTRATION: 'registration',
+  EXAM_THEMES: 'exam-themes'
 }
 
 export const ROUTER_PATHES = {
   HOME: '/',
   ABOUT: '/about',
   LOGIN: '/login',
-  REGISTRATION: '/registration'
+  REGISTRATION: '/registration',
+  EXAM_THEMES: '/exams/:id/'
 }
 
 export const ROUTER_PAGES_COMPONENT_PATHES = {
