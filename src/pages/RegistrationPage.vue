@@ -44,7 +44,7 @@
         <ElButton
           type="primary"
           data-testid="submit-button"
-          @click="handleRegistration"
+          @click="handleRegistration((formRef as FormInstance))"
         >
           Зарегестрироваться
         </ElButton>
@@ -71,16 +71,16 @@ const formRules = ref<FormRules>({
   password: [{ validator: Validator.notEmptyField, trigger: 'blur'}]
 })
 
-const handleRegistration = async () => {
-  const isValid = await checkValidForm()
+const handleRegistration = async (formRef: FormInstance) => {
+  const isValid = await checkValidForm(formRef)
   if (!isValid) return
 
   await registration(registrationData.value)
 }
 
-async function checkValidForm() {
-  if (!formRef.value) return
+async function checkValidForm(formRef: FormInstance) {
+  if (!formRef) return
 
-  return await formRef.value.validate((isValid) => isValid)
+  return await formRef.validate((isValid) => isValid)
 }
 </script>
