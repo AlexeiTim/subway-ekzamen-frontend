@@ -99,4 +99,12 @@ describe('Registration Page', async () => {
 
     expect(wrapper.vm.registrationData.password).toEqual('password')
   })
+
+  it('checkValidForm with undefined argument', async () => {
+    createComponent()
+    
+    const result = await wrapper.vm.checkValidForm(undefined)
+
+    expect(result).toEqual(undefined)
+  })
 })
