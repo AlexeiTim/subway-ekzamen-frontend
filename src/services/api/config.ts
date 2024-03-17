@@ -25,22 +25,22 @@ const apiBaseURL = window.location.hostname === 'localhost' ? mapUrl.local : map
 
 axios.defaults.baseURL = apiBaseURL
 
-// axios.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     ElNotification({
-//       title: 'Ошибка',
-//       message: error.response.data.message,
-//       type: 'error'
-//     })
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    ElNotification({
+      title: 'Ошибка',
+      message: error.response.data.message,
+      type: 'error'
+    })
 
-//     if (error.response.status === 401 || error.response.status === 403) {
-//       clearToken()
-//     }
+    if (error.response.status === 401 || error.response.status === 403) {
+      clearToken()
+    }
 
-//     return Promise.reject(error)
-//   }
-// )
+    return Promise.reject(error)
+  }
+)
 
 export default {
   csrfHeader,
