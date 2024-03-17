@@ -55,6 +55,7 @@
 
 <script setup lang="ts">
 import { useRegistration } from '@/composables/useRegistration';
+import { checkValidForm } from '@/helpers/form/checkValidForm';
 import { Validator } from '@/utils/validator';
 import type { FormInstance, FormRules } from 'element-plus';
 import { ref } from 'vue';
@@ -72,15 +73,11 @@ const formRules = ref<FormRules>({
 })
 
 const handleRegistration = async (formRef: FormInstance) => {
-  const isValid = await checkValidForm(formRef)
+  if (!formRef) return
+
+  const { isValid } = await checkValidForm(formRef)
   if (!isValid) return
 
   await registration(registrationData.value)
-}
-
-async function checkValidForm(formRef: FormInstance) {
-  if (!formRef) return
-
-  return await formRef.validate((isValid) => isValid)
 }
 </script>

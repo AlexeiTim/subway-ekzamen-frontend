@@ -1,5 +1,4 @@
 import { useRegistration } from '@/composables/useRegistration';
-import type { AuthData } from '@/types/auth';
 import { VueWrapper, flushPromises, mount } from '@vue/test-utils';
 import ElementPlus from 'element-plus';
 import { describe, expect, it, vi, type Mock } from 'vitest';
@@ -8,16 +7,8 @@ import RegistrationPage from '../../pages/RegistrationPage.vue';
 vi.mock('@/composables/useRegistration')
 vi.mock('vue-router')
 
-interface ComponentData {
-  registrationData: AuthData,
-  registration: Function,
-  handleRegistration: Promise<void>,
-  checkValidForm: boolean
-}
-type ComponentWrapper = VueWrapper<ComponentData>;
-
 describe('Registration Page', async () => {
-  let wrapper: ComponentWrapper
+  let wrapper: VueWrapper<any>
 
   function createComponent(options = {}, stubs = []) {
     wrapper = mount(RegistrationPage, {
@@ -26,14 +17,14 @@ describe('Registration Page', async () => {
         plugins: [ElementPlus],
         stubs: ['RouterLink', ...stubs],
       },
-    }) as ComponentWrapper
+    })
   }
 
-  function findElementByTestId(testId: string)  {
+  function findElementByTestId(testId: string) {
     return wrapper.find(`[data-testid='${testId}']`)
   }
 
-  it('is valid form data' , async () => {
+  it('is valid form data', async () => {
     (useRegistration as Mock).mockReturnValue({
       registration: vi.fn()
     })
@@ -49,14 +40,13 @@ describe('Registration Page', async () => {
     const submitButton = await findElementByTestId('submit-button')
     await submitButton.trigger('click')
     await flushPromises()
-
     expect(useRegistration().registration).toHaveBeenCalledWith({
       username: '1',
       password: '1',
     })
   })
 
-  it('is not valid form data' , async () => {
+  it('is not valid form data', async () => {
     (useRegistration as Mock).mockReturnValue({
       registration: vi.fn()
     })
@@ -100,10 +90,10 @@ describe('Registration Page', async () => {
     expect(wrapper.vm.registrationData.password).toEqual('password')
   })
 
-  it('checkValidForm with undefined argument', async () => {
+  it('test handle without element', async () => {
     createComponent()
-    
-    const result = await wrapper.vm.checkValidForm(undefined)
+
+    const result = await wrapper.vm.handleRegistration(undefined)
 
     expect(result).toEqual(undefined)
   })

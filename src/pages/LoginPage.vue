@@ -49,6 +49,7 @@
 
 <script setup lang="ts">
 import { useLogin } from '@/composables/useLogin';
+import { checkValidForm } from '@/helpers/form/checkValidForm';
 import { Validator } from '@/utils/validator';
 import type { FormInstance, FormRules } from 'element-plus';
 import { ref } from 'vue';
@@ -66,16 +67,11 @@ const formRules = ref<FormRules>({
   password: [{ validator: Validator.notEmptyField, trigger: 'blur'}]
 })
 
-
-async function checkValidForm(formRef: FormInstance) {
+const handleLogin = async (formRef: FormInstance) => {
   if (!formRef) return
 
-  return await formRef?.validate(isValid => isValid)
-}
-
-const handleLogin = async (formRef: FormInstance) => {
-  const isValidForm = await checkValidForm(formRef)
-  if (!isValidForm) return
+  const { isValid } = await checkValidForm(formRef)
+  if (!isValid) return
 
   await login(loginData.value)
 }

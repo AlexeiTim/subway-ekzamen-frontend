@@ -4,12 +4,10 @@
     "src/**/*.d.ts",
     "src/**/*",
     "src/**/*.vue",
+    "spec/**/*.ts",
     "index.d.ts",
     "vite.config.ts",
     "src/vite-env.d.ts",
-  ],
-  "exclude": [
-    "src/spec/**/*"
   ],
   "compilerOptions": {
     "composite": true,
