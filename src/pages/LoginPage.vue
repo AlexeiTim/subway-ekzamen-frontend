@@ -16,6 +16,7 @@
         <ElFormItem
           label="Логин"
           prop="username"
+          data-testid="username-form-item"
         >
           <ElInput v-model="loginData.username" />
         </ElFormItem>
@@ -23,6 +24,7 @@
         <ElFormItem
           label="Пароль"
           prop="password"
+          data-testid="password-form-item"
         >
           <ElInput v-model="loginData.password" />
         </ElFormItem>
@@ -36,7 +38,7 @@
         </span>
         <ElButton
           type="primary"
-          @click="handleLogin"
+          @click="handleLogin((formRef as FormInstance))"
         >
           Войти
         </ElButton>
@@ -57,6 +59,7 @@ const loginData = ref({
     username: '',
     password: '',
   })
+
 const formRef = ref<FormInstance>()
 const formRules = ref<FormRules>({
   username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
@@ -64,14 +67,14 @@ const formRules = ref<FormRules>({
 })
 
 
-async function checkValidForm() {
-  if (!formRef.value) return
+async function checkValidForm(formRef: FormInstance) {
+  if (!formRef) return
 
-  return await formRef.value?.validate(isValid => isValid)
+  return await formRef?.validate(isValid => isValid)
 }
 
-const handleLogin = async () => {
-  const isValidForm = await checkValidForm()
+const handleLogin = async (formRef: FormInstance) => {
+  const isValidForm = await checkValidForm(formRef)
   if (!isValidForm) return
 
   await login(loginData.value)
