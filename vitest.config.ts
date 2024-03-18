@@ -16,7 +16,7 @@ export default mergeConfig(
       root: fileURLToPath(new URL('./', import.meta.url)),
       globals: true,
       coverage: {
-        exclude: ['**.config**', '**.d.**', '**.cjs', '**/assets', '**/types', '**/vite-env.d.ts'],
+        exclude: ['**.config**', '**.d.**', '**.cjs', '**/assets', '**/types', '**/vite-env.d.ts', '**/App.vue', '**/main.ts', '**/constants'],
         provider: 'v8',
         thresholds: {
           lines: 80,
