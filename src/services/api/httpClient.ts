@@ -34,5 +34,4 @@ const makeRequest = <T>({
   })
 }
 
-
 export default makeRequest

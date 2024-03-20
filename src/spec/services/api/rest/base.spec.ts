@@ -1,70 +1,90 @@
+import { API_METHODS, SERVICE_METHOD_ERRORS } from "@/constants/service";
 import { BaseApiSerivce } from "@/services/api/rest/base";
 import { describe, expect, it, vi } from "vitest";
 
-const testData = [{ id: 1, text: 'test 1' }, { id: 2, text: 'test 2' }]
+const spyMakeRequest = vi.fn().mockReturnValue('mocked')
+vi.mock('@/services/api/httpClient', () => ({
+  default: () => spyMakeRequest()
+}))
 
-const mockGetAll = vi.fn().mockImplementation(() => Promise.resolve(testData))
-const mockGetOne = vi.fn().mockImplementation(() => Promise.resolve(testData[0]))
-const mockUpdate = vi.fn().mockImplementation(() => Promise.resolve(testData.map(d => ({
-  ...d,
-  text: 'update'
-}))))
-const mockDelete = vi.fn().mockImplementation(() => Promise.resolve(testData.slice(0, 1)))
-const mockCreate = vi.fn().mockImplementation(() => Promise.resolve([...testData, { id: 3, text: 'test 3' }]))
+describe('BaseApiService', async () => {
+  describe('get all', () => {
+    it('get all with not allowed method', async () => {
+      const apiService = new BaseApiSerivce('', [API_METHODS.CREATE])
 
-const spyGetAll = vi.spyOn(BaseApiSerivce.prototype, 'getAll')
-spyGetAll.mockImplementation(mockGetAll)
+      expect(() => apiService.getAll()).toThrowError(SERVICE_METHOD_ERRORS.GET)
+    })
 
-const spyGetOne = vi.spyOn(BaseApiSerivce.prototype, 'getOne')
-spyGetOne.mockImplementation(mockGetOne)
+    it('get all with allowed method', async () => {
+      const apiService = new BaseApiSerivce('')
 
-const spyUpdate = vi.spyOn(BaseApiSerivce.prototype, 'update')
-spyUpdate.mockImplementation(mockUpdate)
+      await apiService.getAll()
 
-const spyDelete = vi.spyOn(BaseApiSerivce.prototype, 'delete')
-spyDelete.mockImplementation(mockDelete)
-
-const spyCreate = vi.spyOn(BaseApiSerivce.prototype, 'create')
-spyCreate.mockImplementation(mockCreate)
-
-describe('BaseApiService', () => {
-  const apiService = new BaseApiSerivce()
-
-  it('get all', async () => {
-    const result = await apiService.getAll()
-
-    expect(result.length).toEqual(2)
-    expect(spyGetAll).toHaveBeenCalled()
-  })
-
-  it('get one', async () => {
-    const result = await apiService.getOne(1)
-
-    expect(result).toEqual(testData[0])
-    expect(spyGetOne).toHaveBeenCalledWith(1)
-    expect(Object.entries(result).length).toEqual(2)
-  })
-
-  it('delete', async () => {
-    const result = await apiService.delete(1)
-
-    expect(result.length).toEqual(1)
-    expect(spyDelete).toHaveBeenCalledWith(1)
-  })
-
-  it('create', async () => {
-    const result = await apiService.create({ id: 1, text: 'test 3' })
-
-    expect(result.length).toEqual(3)
-    expect(spyCreate).toHaveBeenCalledWith({
-      id: 1,
-      text: 'test 3'
+      expect(spyMakeRequest).toHaveBeenCalled()
     })
   })
 
-  it('update', async () => {
-    const result = await apiService.update(1, { text: 'update' })
-    expect(spyUpdate).toHaveBeenCalledWith(1, { text: 'update' })
-    expect(result[0].text).toEqual('update')
+  describe('get one', () => {
+    it('get one with not allowed method', async () => {
+      const apiService = new BaseApiSerivce('', [API_METHODS.CREATE])
+
+      expect(() => apiService.getOne(1)).toThrowError(SERVICE_METHOD_ERRORS.GET)
+    })
+
+    it('get one with allowed method', async () => {
+      const apiService = new BaseApiSerivce('')
+
+      await apiService.getOne(1)
+
+      expect(spyMakeRequest).toHaveBeenCalled()
+    })
+  })
+
+  describe('delete', () => {
+    it('delete with not allowed method', async () => {
+      const apiService = new BaseApiSerivce('', [API_METHODS.CREATE])
+
+      expect(() => apiService.delete(1)).toThrowError(SERVICE_METHOD_ERRORS.DELETE)
+    })
+
+    it('delete with allowed memthod', async () => {
+      const apiService = new BaseApiSerivce('', [API_METHODS.DELETE])
+
+      await apiService.delete(1)
+
+      expect(spyMakeRequest).toHaveBeenCalled()
+    })
+  })
+
+  describe('update', () => {
+    it('update with not allowed method', async () => {
+      const apiService = new BaseApiSerivce('', [API_METHODS.CREATE])
+
+      expect(() => apiService.update(1, {})).toThrowError(SERVICE_METHOD_ERRORS.UPDATE)
+    })
+
+    it('update with allowed methodd', async () => {
+      const apiService = new BaseApiSerivce('', [API_METHODS.UPDATE, API_METHODS.PARTIAL_UPDATE])
+
+      await apiService.update(1, {})
+
+      expect(spyMakeRequest).toHaveBeenCalled()
+    })
+  })
+
+  describe('create', () => {
+    it('create without allowed method', async () => {
+      const apiService = new BaseApiSerivce('', [API_METHODS.DELETE])
+
+      expect(() => apiService.create({})).toThrowError(SERVICE_METHOD_ERRORS.CREATE)
+    })
+
+    it('create with allowed method', async () => {
+      const apiService = new BaseApiSerivce('', [API_METHODS.CREATE])
+
+      await apiService.create({})
+
+      expect(spyMakeRequest).toHaveBeenCalled()
+    })
   })
 })
