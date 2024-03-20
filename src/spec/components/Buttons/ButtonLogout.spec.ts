@@ -42,10 +42,7 @@ describe('ButttonGoBack.vue', () => {
     createComponent()
 
     await wrapper.findComponent(ElButton).trigger('click')
-    console.log(wrapper.html())
-    requestAnimationFrame(() => {
-      console.log('2', wrapper.html())
-    })
+
     expect(mockRouterPushFn).toHaveBeenCalledWith({
       name: ROUTER_NAMES.LOGIN
     })

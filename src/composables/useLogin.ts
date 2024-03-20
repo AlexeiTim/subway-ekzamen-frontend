@@ -20,7 +20,6 @@ export function useLogin() {
     const errors: string[] = []
     try {
       const { data } = await authService.login(loginData)
-      console.log(data, '2')
       if (!data) return notificationService.error(ERRORS.NOT_AUTHORIZATION)
 
       setToken(data.auth_token)
@@ -30,16 +29,15 @@ export function useLogin() {
     }
 
     if (errors.length)
-      return errors
+      return {
+        errors
+      }
 
     try {
       const { data: user } = await userService.getCurrentUser()
       if (!user) return notificationService.error(ERRORS.NOT_HAVE_USER)
-      console.log('after user')
       userStore.updateUser(user)
-      console.log('updateUser')
       router.push({ name: ROUTER_NAMES.HOME })
-      console.log('router push')
       const welcomeMessage = generateWelcomeMessage(user.username)
       notificationService.success(welcomeMessage)
     } catch (e) {

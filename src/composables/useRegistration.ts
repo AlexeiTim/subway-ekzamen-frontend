@@ -17,9 +17,7 @@ export function useRegistration() {
       const { data: user } = await authService.registration(registrationData)
 
       if (!user) return notificationService.error(ERRORS.CANT_CREATE_USER)
-      console.log('user', user)
       router.push({ name: ROUTER_NAMES.LOGIN })
-      console.log('push')
       notificationService.success(REGISTRATION_MESSAGES.SUCCESS)
     } catch (e) {
       notificationService.error(ERRORS.CANT_CREATE_USER)

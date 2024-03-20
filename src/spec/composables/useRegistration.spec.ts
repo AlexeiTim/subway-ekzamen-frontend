@@ -44,7 +44,6 @@ describe('useRegistration', () => {
   })
 
   it('try with true response data', async () => {
-    const { registration } = useRegistration()
     spyRegistration.mockImplementation(() => Promise.resolve<any>({
       data: {
         username: '1',

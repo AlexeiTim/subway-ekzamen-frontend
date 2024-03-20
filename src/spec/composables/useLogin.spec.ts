@@ -5,10 +5,9 @@ import { AuthService } from "@/services/api/rest/auth";
 import { UserService } from "@/services/api/rest/user";
 import { NotificationService } from "@/services/notify/notification";
 import { flushPromises } from "@vue/test-utils";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { withSetup } from "../utils/withSetup";
 
-const mockUpdateUser = vi.fn()
 vi.mock('@/stores/user', () => {
   return {
     useUserStore: () => {
@@ -22,144 +21,114 @@ vi.mock('@/stores/user', () => {
   }
 })
 vi.mock('vue-router')
-const loginData = {
+const authData = {
+  username: '1',
+  password: '1'
+}
+
+const emptyAuthData = {
   username: '',
   password: ''
 }
 
 const spyAuthService = vi.spyOn(AuthService.prototype, 'login')
+const spyNotificationService = vi.spyOn(NotificationService.prototype, 'error')
+const spyUserSerivceGetCurrentUser = vi.spyOn(UserService.prototype, 'getCurrentUser')
+
 
 describe('useLogin', () => {
-  afterEach(() => {
-    vi.restoreAllMocks()
+  beforeEach(() => {
+    vi.resetAllMocks()
   })
 
   it('catch auth', async () => {
-    const authData = {
-      username: '',
-      password: ''
-    }
-    const spy = vi.spyOn(AuthService.prototype, 'login')
-    spy.mockImplementation((data) => Promise.reject(data))
+    const { login } = useLogin()
 
-    const [result, app] = withSetup(useLogin)
+    spyAuthService.mockImplementation((data) => Promise.reject(data))
 
-    const resultLogin = await result.login(authData)
-    await flushPromises();
-    console.log(resultLogin, 'resultLogin')
-    expect(resultLogin[0]).toEqual(ERRORS.NOT_HAVE_USER)
-    app?.unmount()
+    const result = await login(emptyAuthData)
+
+    expect(result.errors.join('')).toEqual(ERRORS.NOT_HAVE_USER)
   })
 
   it('try auth without response data', async () => {
-    const spy = vi.spyOn(AuthService.prototype, 'login')
-    spy.mockImplementation(() => Promise.resolve({ data: undefined }))
-    const spyNotify = vi.spyOn(NotificationService.prototype, 'error')
-    const [result, app] = withSetup(useLogin)
-    const resultLogin = await result.login(loginData)
-    expect(spyNotify).toHaveBeenCalledWith(ERRORS.NOT_AUTHORIZATION)
-    app?.unmount()
+    const { login } = useLogin()
+    spyAuthService.mockImplementation(() => Promise.resolve({ data: undefined }))
+
+    await login(emptyAuthData)
+
+    expect(spyNotificationService).toHaveBeenCalledWith(ERRORS.NOT_AUTHORIZATION)
   })
 
 
   it('try auth', async () => {
-    const [result, app] = withSetup(useLogin)
-
-    const authData = {
-      username: '1',
-      password: '1'
-    }
+    const { login } = useLogin()
 
     spyAuthService.mockImplementation(() => Promise.resolve({
       data: {
         auth_token: '123'
       }
     }))
+    spyUserSerivceGetCurrentUser.mockImplementation(() => Promise.reject())
+    spyNotificationService.mockImplementation(() => { })
 
-    const resultLogin = await result.login(authData)
-    await flushPromises();
-    expect(resultLogin.errors[0]).toEqual(ERRORS.CANT_GET_USER_DATA)
-    app?.unmount()
+    const { errors } = await login(authData)
+
+    expect(errors[0]).toEqual(ERRORS.CANT_GET_USER_DATA)
+    expect(spyUserSerivceGetCurrentUser).toHaveBeenCalled()
+    expect(spyNotificationService).toHaveBeenCalledWith(ERRORS.CANT_GET_USER_DATA)
   })
 
   it('try get user without data', async () => {
-    const authData = {
-      username: '1',
-      password: '1'
-    }
-
-    const spy = vi.spyOn(AuthService.prototype, 'login')
-    spy.mockImplementation(() => Promise.resolve({
+    const { login } = useLogin()
+    spyAuthService.mockImplementation(() => Promise.resolve({
       data: {
         auth_token: '123'
       }
     }))
+    spyUserSerivceGetCurrentUser.mockImplementation(() => Promise.resolve({ data: undefined }))
 
-    const spyGetCurrentUser = vi.spyOn(UserService.prototype, 'getCurrentUser')
-    spyGetCurrentUser.mockImplementation(() => Promise.resolve({ data: undefined }))
-    const spyNotify = vi.spyOn(NotificationService.prototype, 'error')
+    const result = await login(authData)
 
-    const [result, app] = withSetup(useLogin)
-    const resultLogin = await result.login(authData)
-    await flushPromises();
-    expect(spyNotify).toHaveBeenCalledWith(ERRORS.NOT_HAVE_USER)
-    expect(resultLogin).toEqual(undefined)
-    app?.unmount()
+    expect(spyNotificationService).toHaveBeenCalledWith(ERRORS.NOT_HAVE_USER)
+    expect(result).toEqual(undefined)
   })
 
 
   it('catch get user', async () => {
-    const authData = {
-      username: '1',
-      password: '1'
-    }
+    const { login } = useLogin()
+    spyAuthService.mockImplementation(() => Promise.resolve({ data: { auth_token: '123' } }))
+    spyUserSerivceGetCurrentUser.mockImplementation(() => Promise.reject())
 
-    const spy = vi.spyOn(AuthService.prototype, 'login')
-    spy.mockImplementation(() => Promise.resolve({ data: { auth_token: '123' } }))
+    const { errors } = await login(authData)
 
-    const spyGetCurrentUser = vi.spyOn(UserService.prototype, 'getCurrentUser')
-    spyGetCurrentUser.mockImplementation(() => Promise.reject())
-    const spyNotify = vi.spyOn(NotificationService.prototype, 'error')
-
-    const [result, app] = withSetup(useLogin)
-    const resultLogin = await result.login(authData)
-    await flushPromises();
-    expect(spyNotify).toHaveBeenCalledWith(ERRORS.CANT_GET_USER_DATA)
-    expect(resultLogin.errors[0]).toEqual(ERRORS.CANT_GET_USER_DATA)
-    app?.unmount()
+    expect(spyNotificationService).toHaveBeenCalledWith(ERRORS.CANT_GET_USER_DATA)
+    expect(errors[0]).toEqual(ERRORS.CANT_GET_USER_DATA)
   })
 
   it('try get user with response data', async () => {
-    const authData = {
-      username: '1',
-      password: '1'
-    }
 
-    const spy = vi.spyOn(AuthService.prototype, 'login')
-    spy.mockImplementation(() => Promise.resolve({
+    const VueRouter = await import('vue-router');
+    spyAuthService.mockImplementation(() => Promise.resolve({
       data: {
         auth_token: '123'
       }
     }))
-
-    const spyGetCurrentUser = vi.spyOn(UserService.prototype, 'getCurrentUser')
-    spyGetCurrentUser.mockImplementation(() => Promise.resolve({ data: { user: 1 } }))
-    const spyNotify = vi.spyOn(NotificationService.prototype, 'error')
-    const VueRouter = await import('vue-router');
+    spyUserSerivceGetCurrentUser.mockImplementation(() => Promise.resolve({ data: { user: 1 } }))
     const mockedRouterPush = vi.fn()
+
     VueRouter.useRouter.mockReturnValueOnce({
       push: mockedRouterPush
     })
+
     const [result, app] = withSetup(useLogin)
     const resultLogin = await result.login(authData)
 
-    console.log(resultLogin, 'test')
     await flushPromises();
-    expect(spyNotify).not.toHaveBeenCalled()
+    expect(spyNotificationService).not.toHaveBeenCalled()
     expect(mockedRouterPush).toHaveBeenCalledWith({
       name: ROUTER_NAMES.HOME
     })
-    // expect(resultLogin).toEqual(undefined)
     app?.unmount()
   })
 })
