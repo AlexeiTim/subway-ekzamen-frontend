@@ -6,17 +6,15 @@ export const routes = [
   {
     path: ROUTER_PATHES.HOME,
     name: ROUTER_NAMES.HOME,
-    component: HomePage
-  },
-  {
-    path: ROUTER_PATHES.ABOUT,
-    name: ROUTER_NAMES.ABOUT,
-    component: () => import('@/pages/AboutPage.vue')
+    component: HomePage,
   },
   {
     path: ROUTER_PATHES.LOGIN,
     name: ROUTER_NAMES.LOGIN,
-    component: () => import('@/pages/LoginPage.vue')
+    component: () => import('@/pages/LoginPage.vue'),
+    meta: {
+      permissions: PERMISSION.PUBLIC
+    }
   },
   {
     path: ROUTER_PATHES.REGISTRATION,
@@ -29,6 +27,6 @@ export const routes = [
   {
     path: ROUTER_PATHES.EXAM_THEMES,
     name: ROUTER_NAMES.EXAM_THEMES,
-    component: () => import('@/pages/ExamThemesPage.vue')
+    component: () => import('@/pages/ExamThemesPage.vue'),
   }
 ]

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { TokenStorage } from '../storage/token'
 import { ElNotification } from 'element-plus'
+import { TokenStorage } from '../storage/token'
 
 const csrfHeader = { 'X-CSRFToken': localStorage.getItem('token') }
 

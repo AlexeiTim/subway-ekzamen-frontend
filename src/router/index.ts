@@ -17,6 +17,7 @@ router.beforeEach((to) => {
     return {
       name: ROUTER_NAMES.LOGIN
     }
+
   return true
 })
 

@@ -12,7 +12,7 @@ export default mergeConfig(
         }
       },
       environment: 'jsdom',
-      exclude: [...configDefaults.exclude, 'e2e/*', '**.config**'],
+      exclude: [...configDefaults.exclude, 'e2e/*', '**.config.ts'],
       root: fileURLToPath(new URL('./', import.meta.url)),
       globals: true,
       coverage: {
