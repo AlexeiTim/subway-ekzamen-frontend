@@ -1,4 +1,5 @@
 import { REGISTRATION_MESSAGES } from "@/constants/auth"
+import { ERRORS } from "@/constants/errors"
 import { ROUTER_NAMES } from "@/constants/router"
 import { AuthService } from "@/services/api/rest/auth"
 import { NotificationService } from "@/services/notify/notification"
@@ -12,12 +13,15 @@ export function useRegistration() {
 
 
   async function registration(registrationData: AuthData) {
-    const { data: user } = await authService.registration(registrationData)
+    try {
+      const { data: user } = await authService.registration(registrationData)
 
-    if (!user) return
-    
-    router.push({ name: ROUTER_NAMES.LOGIN })
-    notificationService.success(REGISTRATION_MESSAGES.SUCCESS)
+      if (!user) return notificationService.error(ERRORS.CANT_CREATE_USER)
+      router.push({ name: ROUTER_NAMES.LOGIN })
+      notificationService.success(REGISTRATION_MESSAGES.SUCCESS)
+    } catch (e) {
+      notificationService.error(ERRORS.CANT_CREATE_USER)
+    }
   }
 
   return {

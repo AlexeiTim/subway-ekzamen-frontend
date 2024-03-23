@@ -9,20 +9,18 @@
 </template>
 
 <script setup lang="ts">
+import examsDB from '@/db/exams.json';
 import { ExamModel } from '@/models/exam.model';
-import { ExamFakeService } from '@/services/api/fake/exam';
 import { onMounted, ref } from 'vue';
 import ExamItem from './ExamItem.vue';
 
 const { exams } = useExam()
 
 function useExam() {
-  const examService = new ExamFakeService()
   const exams = ref<ExamModel[]>([])
 
   async function loadExams() {
-    const response = await examService.getAll()
-    exams.value = response.map(r => new ExamModel(r))
+    exams.value = examsDB.map(r => new ExamModel(r))
   }
 
   onMounted(async () => {

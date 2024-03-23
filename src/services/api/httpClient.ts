@@ -13,7 +13,7 @@ export interface IRequest {
   paramsSerializer?: (params: object | string) => string
 }
 
-const makeRequest = <T>({
+export const makeRequest = <T>({
   url = '/',
   method = 'get',
   headers,
@@ -33,6 +33,5 @@ const makeRequest = <T>({
     withCredentials: false
   })
 }
-
 
 export default makeRequest
