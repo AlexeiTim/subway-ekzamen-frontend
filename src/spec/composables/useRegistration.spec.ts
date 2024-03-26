@@ -4,14 +4,20 @@ import { ERRORS } from "@/constants/errors";
 import { ROUTER_NAMES } from "@/constants/router";
 import { AuthService } from "@/services/api/rest/auth";
 import { NotificationService } from "@/services/notify/notification";
-import { flushPromises } from "@vue/test-utils";
-import { describe, expect, it, vi, type Mock } from "vitest";
-import { withSetup } from "../utils/withSetup";
+import { flushPromises, mount } from "@vue/test-utils";
+import { describe, expect, it, vi } from "vitest";
+import { defineComponent } from "vue";
 
 const spyNotify = vi.spyOn(NotificationService.prototype, 'error')
 const spyNotifySuccess = vi.spyOn(NotificationService.prototype, 'success')
 const spyRegistration = vi.spyOn(AuthService.prototype, 'registration')
-vi.mock('vue-router')
+const mockRouterPush = vi.fn();
+
+vi.mock('vue-router', () => ({
+  useRouter: () => ({
+    push: mockRouterPush
+  })
+}))
 
 
 describe('useRegistration', () => {
@@ -44,6 +50,13 @@ describe('useRegistration', () => {
   })
 
   it('try with true response data', async () => {
+    const TestComponent = defineComponent({
+      setup() {
+        return {
+          ...useRegistration()
+        }
+      }
+    })
     spyRegistration.mockImplementation(() => Promise.resolve<any>({
       data: {
         username: '1',
@@ -51,15 +64,10 @@ describe('useRegistration', () => {
         id: 1
       }
     }))
-    const VueRouter = await import('vue-router');
-    const mockRouterPush = vi.fn();
+    const wrapper = mount(TestComponent)
 
-    (VueRouter.useRouter as Mock).mockReturnValue({
-      push: mockRouterPush
-    })
 
-    const [result, app] = withSetup(useRegistration)
-    await (result as any).registration(registrationWithData)
+    await wrapper.vm.registration(registrationWithData)
     await flushPromises()
 
     const name = ROUTER_NAMES.LOGIN
@@ -67,6 +75,5 @@ describe('useRegistration', () => {
       name,
     })
     expect(spyNotifySuccess).toHaveBeenCalledWith(REGISTRATION_MESSAGES.SUCCESS)
-    app?.unmount()
   })
 })

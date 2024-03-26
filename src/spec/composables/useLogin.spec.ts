@@ -4,23 +4,28 @@ import { ROUTER_NAMES } from "@/constants/router";
 import { AuthService } from "@/services/api/rest/auth";
 import { UserService } from "@/services/api/rest/user";
 import { NotificationService } from "@/services/notify/notification";
-import { flushPromises } from "@vue/test-utils";
+import type { User } from "@/types/user";
+import { flushPromises, mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { withSetup } from "../utils/withSetup";
+import { defineComponent } from "vue";
 
 vi.mock('@/stores/user', () => {
   return {
-    useUserStore: () => {
-      return {
-        user: {},
-        updateUser: (data) => {
-          this.user = data
-        }
+    useUserStore: () => ({
+      user: {} as User,
+      updateUser(data: User) {
+        this.user = data
       }
-    }
+    })
   }
 })
-vi.mock('vue-router')
+const mockedRouterPush = vi.fn();
+
+vi.mock('vue-router', () => ({
+  useRouter: () => ({
+    push: mockedRouterPush
+  })
+}))
 const authData = {
   username: '1',
   password: '1'
@@ -48,12 +53,12 @@ describe('useLogin', () => {
 
     const result = await login(emptyAuthData)
 
-    expect(result.errors.join('')).toEqual(ERRORS.NOT_HAVE_USER)
+    expect(result?.errors.join('')).toEqual(ERRORS.NOT_HAVE_USER)
   })
 
   it('try auth without response data', async () => {
     const { login } = useLogin()
-    spyAuthService.mockImplementation(() => Promise.resolve({ data: undefined }))
+    spyAuthService.mockImplementation(() => Promise.resolve({ data: undefined } as any))
 
     await login(emptyAuthData)
 
@@ -72,9 +77,9 @@ describe('useLogin', () => {
     spyUserSerivceGetCurrentUser.mockImplementation(() => Promise.reject())
     spyNotificationService.mockImplementation(() => { })
 
-    const { errors } = await login(authData)
+    const result = await login(authData)
 
-    expect(errors[0]).toEqual(ERRORS.CANT_GET_USER_DATA)
+    expect(result?.errors[0]).toEqual(ERRORS.CANT_GET_USER_DATA)
     expect(spyUserSerivceGetCurrentUser).toHaveBeenCalled()
     expect(spyNotificationService).toHaveBeenCalledWith(ERRORS.CANT_GET_USER_DATA)
   })
@@ -100,35 +105,44 @@ describe('useLogin', () => {
     spyAuthService.mockImplementation(() => Promise.resolve({ data: { auth_token: '123' } }))
     spyUserSerivceGetCurrentUser.mockImplementation(() => Promise.reject())
 
-    const { errors } = await login(authData)
+    const result = await login(authData)
 
     expect(spyNotificationService).toHaveBeenCalledWith(ERRORS.CANT_GET_USER_DATA)
-    expect(errors[0]).toEqual(ERRORS.CANT_GET_USER_DATA)
+    expect(result?.errors[0]).toEqual(ERRORS.CANT_GET_USER_DATA)
   })
 
   it('try get user with response data', async () => {
+    const TestComponent = defineComponent({
+      setup() {
+        return {
+          ...useLogin()
+        }
+      }
+    })
+    const wrapper = mount(TestComponent, {
+      global: {
+        mocks: {
+          $router: {
+            push: vi.fn()
+          }
+        }
+      }
+    })
 
-    const VueRouter = await import('vue-router');
     spyAuthService.mockImplementation(() => Promise.resolve({
       data: {
         auth_token: '123'
       }
     }))
     spyUserSerivceGetCurrentUser.mockImplementation(() => Promise.resolve({ data: { user: 1 } }))
-    const mockedRouterPush = vi.fn()
 
-    VueRouter.useRouter.mockReturnValueOnce({
-      push: mockedRouterPush
-    })
-
-    const [result, app] = withSetup(useLogin)
-    const resultLogin = await result.login(authData)
+    await wrapper.vm.login(authData)
 
     await flushPromises();
     expect(spyNotificationService).not.toHaveBeenCalled()
     expect(mockedRouterPush).toHaveBeenCalledWith({
       name: ROUTER_NAMES.HOME
     })
-    app?.unmount()
+    expect(mockedRouterPush).toHaveBeenCalled()
   })
 })
