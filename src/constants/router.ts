@@ -3,7 +3,8 @@ export const ROUTER_NAMES = {
   ABOUT: 'about',
   LOGIN: 'login',
   REGISTRATION: 'registration',
-  EXAM_THEMES: 'exam-themes'
+  EXAM_THEMES: 'exam-themes',
+  PRACTICE: 'practice'
 }
 
 export const ROUTER_PATHES = {
@@ -11,7 +12,8 @@ export const ROUTER_PATHES = {
   ABOUT: '/about',
   LOGIN: '/login',
   REGISTRATION: '/registration',
-  EXAM_THEMES: '/exams/:id/'
+  EXAM_THEMES: '/exams/:id/',
+  PRACTICE: '/practice'
 }
 
 export const ROUTER_PAGES_COMPONENT_PATHES = {
