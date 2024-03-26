@@ -9,7 +9,7 @@ const mockRouterGoBackFn = vi.fn()
 
 describe('ButttonGoBack.vue', () => {
   let wrapper: VueWrapper<any>
-  const mockRouterFn = vi.fn()
+
   function createComponent() {
     wrapper = mount(ButtonGoBack, {
       global: {
