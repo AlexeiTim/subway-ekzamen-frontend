@@ -7,3 +7,7 @@ export interface Exam {
   readonly title: ExamName
   readonly description?: ExamDescription
 }
+
+export interface ExamParams {
+  readonly search?: string
+}

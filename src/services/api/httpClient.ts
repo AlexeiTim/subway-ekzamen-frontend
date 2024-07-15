@@ -1,3 +1,4 @@
+import type { BaseResponse } from '@/types/api'
 import axios, { type ResponseType } from 'axios'
 import config from './config'
 
@@ -21,7 +22,7 @@ export const makeRequest = <T>({
   data,
   responseType = 'json',
   paramsSerializer
-}: IRequest): Promise<{ data: T }> => {
+}: IRequest): Promise<BaseResponse<T>> => {
   return axios({
     url,
     method,

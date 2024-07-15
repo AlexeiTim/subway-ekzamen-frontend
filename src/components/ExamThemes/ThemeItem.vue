@@ -4,7 +4,7 @@
     style="margin-left: 0; height: 40px; justify-content: start;"
     @click="handleSetSelectedTheme"
   >
-    {{ props.theme.name }}
+    {{ props.theme.title }}
   </ElButton>
 </template>
 

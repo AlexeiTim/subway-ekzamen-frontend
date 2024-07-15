@@ -1,5 +1,8 @@
 <template>
-  <div class="flex items-center justify-center h-[100%]">
+  <div
+    class="flex items-center justify-center h-[100%]"
+    @click="goToParctice"
+  >
     <div class="text-center flex items-center justify-center flex-col gap-[124px]">
       <div class="h-[100%]">
         <h2
@@ -31,3 +34,14 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ROUTER_NAMES } from '@/constants/router';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+
+function goToParctice() {
+  router.push({ name: ROUTER_NAMES.PRACTICE })
+}
+</script>

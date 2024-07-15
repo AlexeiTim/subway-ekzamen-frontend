@@ -15,7 +15,7 @@ export const ROUTER_PATHES = {
   ABOUT: '/about',
   LOGIN: '/login',
   REGISTRATION: '/registration',
-  EXAM_THEMES: '/exams/:id/',
+  EXAM_THEMES: '/exams/:id/themes',
   PRACTICE: '/practice',
   PRE_PRACTICE: '/pre-practice',
   SETTING_PRACTICE: '/setting-practice',

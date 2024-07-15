@@ -1,8 +1,8 @@
 import { API_METHODS, SERVICE_METHOD_ERRORS } from '@/constants/service'
-import type { BaseApi } from '@/types/api'
+import type { BaseApi, BaseResponse } from '@/types/api'
 import makeRequest from '../httpClient'
 
-export class BaseApiSerivce<T> implements BaseApi {
+export class BaseApiSerivce<T, U = null> implements BaseApi {
   constructor(
     public endpoint: string = '',
     public methods: string[] = [
@@ -17,7 +17,7 @@ export class BaseApiSerivce<T> implements BaseApi {
     this.methods = methods
   }
 
-  public getOne(id: string | number): Promise<T> {
+  public getOne(id: string | number): Promise<BaseResponse<T>> {
     if (!this.methods.includes(API_METHODS.GET)) throw new Error(SERVICE_METHOD_ERRORS.GET)
 
     return makeRequest<T>({
@@ -25,7 +25,7 @@ export class BaseApiSerivce<T> implements BaseApi {
     })
   }
 
-  public getAll(params: Partial<T> = {}): Promise<T[]> {
+  public getAll(params?: U): Promise<BaseResponse<T[]>> {
     if (!this.methods.includes(API_METHODS.GET)) throw new Error(SERVICE_METHOD_ERRORS.GET)
 
     return makeRequest<T[]>({
@@ -34,7 +34,7 @@ export class BaseApiSerivce<T> implements BaseApi {
     })
   }
 
-  public update(id: string | number, data: Omit<T, 'id'>): Promise<T> {
+  public update(id: string | number, data: Omit<T, 'id'>): Promise<BaseResponse<T>> {
     if (
       !this.methods.includes(API_METHODS.PARTIAL_UPDATE) ||
       !this.methods.includes(API_METHODS.UPDATE)
@@ -47,7 +47,7 @@ export class BaseApiSerivce<T> implements BaseApi {
     })
   }
 
-  public delete(id: string | number): Promise<T> {
+  public delete(id: string | number): Promise<BaseResponse<T>> {
     if (!this.methods.includes(API_METHODS.DELETE)) throw new Error(SERVICE_METHOD_ERRORS.DELETE)
 
     return makeRequest<T>({
@@ -55,7 +55,7 @@ export class BaseApiSerivce<T> implements BaseApi {
     })
   }
 
-  public create(data: Partial<T>): Promise<T> {
+  public create(data: Partial<T>): Promise<BaseResponse<T>> {
     if (!this.methods.includes(API_METHODS.CREATE)) throw new Error(SERVICE_METHOD_ERRORS.CREATE)
 
     return makeRequest<T>({

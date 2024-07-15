@@ -10,3 +10,8 @@ export interface Theme {
   description: ThemeDescription
   exam: ExamId
 }
+
+export interface ThemeParams {
+  search?: string
+  examId?: number
+}

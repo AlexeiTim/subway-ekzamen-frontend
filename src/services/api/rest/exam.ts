@@ -1,4 +1,4 @@
-import type { Exam } from "@/types/exam";
+import type { Exam, ExamParams } from "@/types/exam";
 import { BaseApiSerivce } from "./base";
 
-export const ExamService = new BaseApiSerivce<Exam>('/exams')
+export const ExamService = new BaseApiSerivce<Exam, ExamParams>('/exams')

@@ -1,5 +1,5 @@
 import { ExamService } from "@/services/api/rest/exam";
-import type { Exam } from "@/types/exam";
+import type { Exam, ExamParams } from "@/types/exam";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -9,7 +9,7 @@ export const useExamsStore = defineStore('exam-store', () => {
   const error = ref<any>(null)
   const exams = ref<Exam[]>([])
 
-  async function getAll(params?: { search: string }) {
+  async function getAll(params?: ExamParams) {
     try {
       error.value = null
       isLoading.value = true

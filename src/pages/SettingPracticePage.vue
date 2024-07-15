@@ -24,7 +24,9 @@
           </div>
 
           <div class="flex items-center justify-around">
-            <ElButton>Принять</ElButton>
+            <ElButton @click="handleGoToPrePractice">
+              Принять
+            </ElButton>
             <ElButton>Отменить</ElButton>
           </div>
         </div>
@@ -34,5 +36,11 @@
 </template>
 
 <script setup lang="ts">
+import { ROUTER_NAMES } from '@/constants/router';
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
+function handleGoToPrePractice() {
+  router.push({name: ROUTER_NAMES.PRE_PRACTICE})
+}
 </script>

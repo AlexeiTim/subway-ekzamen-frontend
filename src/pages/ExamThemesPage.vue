@@ -11,7 +11,11 @@
       </div>
     </template>
     <template #search>
-      <ElInput placeholder="Введите название темы" />
+      <ElInput
+        v-model="search"
+        placeholder="Введите название темы"
+        @input="handleSearchThemes"
+      />
     </template>
     <template #list>
       <div class="flex flex-col gap-1">
@@ -22,14 +26,16 @@
           Экзамен
         </ElButton>
         <ThemeItem
-          v-for="theme in filteredThemes"
+          v-for="theme in themesStore.themes"
           :key="theme.id"
           :theme="theme"
         />
       </div>
     </template>
     <template #button-ok>
-      <ElButton>ОК</ElButton>
+      <ElButton @click="goToPrePractivePage">
+        ОК
+      </ElButton>
     </template>
     <template #button-cancel>
       <ElButton>Отмена</ElButton>
@@ -42,15 +48,29 @@
 
 <script lang="ts" setup>
 import ThemeItem from '@/components/ExamThemes/ThemeItem.vue';
-import themesDB from '@/db/themes.json';
+import { ROUTER_NAMES } from '@/constants/router';
 import LayoutDashboard from '@/layouts/LayoutDashboard.vue';
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useThemesStore } from '@/stores/theme';
+import { useDebounceFn } from '@vueuse/core';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute()
-const themes = ref(themesDB)
+const router = useRouter()
+const themesStore = useThemesStore()
+const examId = +route.params.id
+const search  = ref('')
+function goToPrePractivePage() {
+  router.push({ name: ROUTER_NAMES.SETTING_PRACTICE})
+}
 
-const filteredThemes = computed(() =>
-  themes.value.filter(t => t.exam === Number(route.params.id))
-)
+const handleSearchThemes = useDebounceFn((value: string) => {
+  themesStore.getAll(examId, { search: value })
+}, 400)
+
+onMounted(async () => {
+  
+  if (examId)
+    await themesStore.getAll(examId)
+})
 </script>

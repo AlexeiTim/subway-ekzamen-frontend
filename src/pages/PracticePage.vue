@@ -71,12 +71,15 @@
 
 <script setup lang="ts">
 import ModalQuestionInfo from '@/components/Practice/Modals/ModalQuestionInfo.vue';
+import { ROUTER_NAMES } from '@/constants/router';
 import LayoutPractice from '@/layouts/LayoutPractice.vue';
 import { ElMessageBox } from 'element-plus';
 import { computed, ref } from 'vue';
 import { useModal } from 'vue-final-modal';
+import { useRouter } from 'vue-router';
 
 const selectedAnswer = ref()
+const router = useRouter()
 const question = 'Какой-то очень длинный вопрос'
 const answers = [
   {id: 1, text: 'Ответ 1 false', correct: false},
@@ -126,6 +129,7 @@ function defineButtonType(id: number) {
 
 function reset() {
   selectedAnswer.value = null
+  router.push({ name: ROUTER_NAMES.RESULTS})
 }
 
 function handleSelectAnswer({ id, correct }: {id: number, correct: boolean}) {
