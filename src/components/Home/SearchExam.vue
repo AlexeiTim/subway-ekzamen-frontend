@@ -7,15 +7,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useHomePageStore } from '@/stores/pages';
+import { useExamsStore } from '@/stores/exam';
 import { useDebounceFn } from '@vueuse/core';
 import { ref } from 'vue';
 
 
 const search = ref('')
-const homePageStore = useHomePageStore()
+const examsStore = useExamsStore()
 
 const handleChangeSearchValue = useDebounceFn((value: string) => {
-  homePageStore.unsetSelectedExam()
+  examsStore.getAll({ search: value })
 }, 400) 
 </script>

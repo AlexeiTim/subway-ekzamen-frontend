@@ -14,17 +14,19 @@ import ModalExamInfo from './modals/ModalExamInfo.vue';
 const notifyService = new NotificationService()
 
 const homePageStore = useHomePageStore()
-const { open: openExamInfoModal, close: closeExamInfoModal } = useModal({
-  component: ModalExamInfo,
-  attrs: {
-    onClose() {
-      closeExamInfoModal()
-    }
-  }
-})
+
 
 const handleOpenExamInfoModal = () => {
   if (!homePageStore.selectedExam) return notifyService.warning(WARNINGS.NOT_HAVE_SELECTED_EXAM)
-  openExamInfoModal()
+  const { open, close } = useModal({
+  component: ModalExamInfo,
+  attrs: {
+    examId: homePageStore.selectedExam.id,
+    onClose() {
+      close()
+    }
+  }
+})
+open()
 }
 </script>

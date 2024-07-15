@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-1">
     <ExamItem
-      v-for="exam in exams"
+      v-for="exam in examsStore.exams"
       :key="exam.id"
       :exam="exam"
     />
@@ -9,26 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import examsDB from '@/db/exams.json';
-import { ExamModel } from '@/models/exam.model';
-import { onMounted, ref } from 'vue';
+import { useExamsStore } from '@/stores/exam';
+import { onMounted } from 'vue';
 import ExamItem from './ExamItem.vue';
 
-const { exams } = useExam()
+const examsStore = useExamsStore()
 
-function useExam() {
-  const exams = ref<ExamModel[]>([])
-
-  async function loadExams() {
-    exams.value = examsDB.map(r => new ExamModel(r))
-  }
-
-  onMounted(async () => {
-    await loadExams()
-  })
-
-  return {
-    exams,
-  }
-}
+onMounted(() => {
+  examsStore.getAll()
+})
 </script>

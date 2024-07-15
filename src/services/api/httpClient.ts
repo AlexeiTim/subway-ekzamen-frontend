@@ -21,7 +21,7 @@ export const makeRequest = <T>({
   data,
   responseType = 'json',
   paramsSerializer
-}: IRequest): Promise<T> => {
+}: IRequest): Promise<{ data: T }> => {
   return axios({
     url,
     method,

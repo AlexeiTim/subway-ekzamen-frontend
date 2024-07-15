@@ -29,9 +29,5 @@ import ButtonExamInfo from '@/components/Home/ButtonExamInfo.vue';
 import ButtonGoToExamThemes from '@/components/Home/ButtonGoToExamThemes.vue';
 import ExamList from '@/components/Home/ExamList.vue';
 import SearchExam from '@/components/Home/SearchExam.vue';
-import { ROUTER_NAMES } from '@/constants/router';
 import LayoutDashboard from '@/layouts/LayoutDashboard.vue';
-import router from '@/router';
-
-router.push({ name: ROUTER_NAMES.RESULTS})
 </script>

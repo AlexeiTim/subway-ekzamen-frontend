@@ -1,64 +1,44 @@
-import { ExamModel } from "@/models/exam.model";
+import { ExamService } from "@/services/api/rest/exam";
+import type { Exam } from "@/types/exam";
 import { defineStore } from "pinia";
+import { ref } from "vue";
 
 
-export const useExamStore = defineStore('exam-store', {
-  state: () => ({
-    loading: false,
-    error: null as unknown,
-    exams: [] as ExamModel[],
-  }),
-  // actions: {
-  //   async getAll(): Promise<ExamModel[]> {
-  //     const examFakeSerivce = new ExamFakeService()
+export const useExamsStore = defineStore('exam-store', () => {
+  const isLoading = ref(false)
+  const error = ref<any>(null)
+  const exams = ref<Exam[]>([])
 
-  //     this.loading = true
-  //     try {
-  //       const exams = await examFakeSerivce.getAll()
-  //       this.exams = exams.map(exam => new ExamModel(exam))
-  //     } catch (error) {
-  //       this.error = error
-  //     } finally {
-  //       this.loading = false
-  //     }
+  async function getAll(params?: { search: string }) {
+    try {
+      error.value = null
+      isLoading.value = true
+      const response = await ExamService.getAll(params)
+      return (exams.value = response.data)
+    } catch (e) {
+      error.value = e
+    } finally {
+      isLoading.value = false
+    }
+  }
 
-  //     return this.exams as ExamModel[]
-  //   },
-
-  //   async getOne(id: number) {
-  //     const response = await ExamService.getOne(id)
-  //     const exam = new ExamModel(response)
-  //     let oldExam = this.exams.find(e => e.id === exam.id)
-
-  //     if (oldExam)
-  //       oldExam = exam
-
-  //     return exam
-  //   },
-
-  //   async create(data: Partial<Exam>) {
-  //     const exam = await ExamService.create(data)
-  //     this.exams.push(new ExamModel(exam))
-  //   },
-
-  //   async update(id: number, data: Omit<Exam, 'id'>) {
-  //     const response = await ExamService.update(id, data)
-  //     const exam = new ExamModel(response)
-  //     let oldExam = this.exams.find(e => e.id === exam.id)
-
-  //     if (oldExam)
-  //       oldExam = exam
-  //     return exam 
-  //   },
-
-  //   async delete(id: number) {
-  //     const response = await ExamService.delete(id)
-
-  //     const oldExamIndex = this.exams.findIndex(e => e.id === id)
-  //     if (oldExamIndex != -1)
-  //       this.exams.splice(oldExamIndex, 1)
-
-  //     return response
-  //   }
-  // }
+  async function getOne(examId: number) {
+    try {
+      error.value = null
+      isLoading.value = true
+      const response = await ExamService.getOne(examId)
+      return response.data
+    } catch (e) {
+      error.value = e
+    } finally {
+      isLoading.value = false
+    }
+  }
+  return {
+    isLoading,
+    error,
+    exams,
+    getAll,
+    getOne
+  }
 })

@@ -4,17 +4,17 @@
     style="margin-left: 0; height: 40px; justify-content: start;"
     @click="homePageStore.setSelectedExam(props.exam)"
   >
-    {{ props.exam.name }}
+    {{ props.exam.title }}
   </ElButton>
 </template>
 
 <script lang="ts" setup>
-import type { ExamModel } from '@/models/exam.model';
 import { useHomePageStore } from '@/stores/pages/home-page-store';
+import type { Exam } from '@/types/exam';
 import { computed } from 'vue';
 
 interface Props {
-  exam: ExamModel
+  exam: Exam
 }
 
 const props = defineProps<Props>()

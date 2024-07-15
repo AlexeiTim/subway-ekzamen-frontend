@@ -4,6 +4,6 @@ export type ExamDescription = string
 
 export interface Exam {
   readonly id: ExamId
-  readonly name: ExamName
+  readonly title: ExamName
   readonly description?: ExamDescription
 }
