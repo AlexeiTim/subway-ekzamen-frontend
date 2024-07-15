@@ -33,5 +33,5 @@ import { ROUTER_NAMES } from '@/constants/router';
 import LayoutDashboard from '@/layouts/LayoutDashboard.vue';
 import router from '@/router';
 
-router.push({ name: ROUTER_NAMES.PRE_PRACTICE})
+router.push({ name: ROUTER_NAMES.SETTING_PRACTICE})
 </script>
