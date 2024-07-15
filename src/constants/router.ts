@@ -6,7 +6,8 @@ export const ROUTER_NAMES = {
   EXAM_THEMES: 'exam-themes',
   PRACTICE: 'practice',
   PRE_PRACTICE: 'pre-practice',
-  SETTING_PRACTICE: 'setting-practice'
+  SETTING_PRACTICE: 'setting-practice',
+  RESULTS: 'results',
 }
 
 export const ROUTER_PATHES = {
@@ -17,7 +18,8 @@ export const ROUTER_PATHES = {
   EXAM_THEMES: '/exams/:id/',
   PRACTICE: '/practice',
   PRE_PRACTICE: '/pre-practice',
-  SETTING_PRACTICE: '/setting-practice'
+  SETTING_PRACTICE: '/setting-practice',
+  RESULTS: '/results'
 }
 
 export const ROUTER_PAGES_COMPONENT_PATHES = {

@@ -44,5 +44,10 @@ export const routes: RouteRecordRaw[] = [
     path: ROUTER_PATHES.SETTING_PRACTICE,
     name: ROUTER_NAMES.SETTING_PRACTICE,
     component: () => import('@/pages/SettingPracticePage.vue')
+  },
+  {
+    path: ROUTER_PATHES.RESULTS,
+    name: ROUTER_NAMES.RESULTS,
+    component: () => import('@/pages/ResultPage.vue')
   }
 ]
