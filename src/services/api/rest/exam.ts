@@ -1,4 +1,5 @@
 import type { Exam, ExamParams } from "@/types/exam";
+import type { ExamPractice } from "@/types/exam-practice";
 import makeRequest from "../httpClient";
 import { BaseApiSerivce } from "./base";
 
@@ -8,7 +9,7 @@ class ExamApiService<T, U> extends BaseApiSerivce<T, U> {
   }
 
   async startExamPractice(examId: number) {
-    return makeRequest({
+    return makeRequest<ExamPractice>({
       url: '/exams_practice/' + examId
     })
   }

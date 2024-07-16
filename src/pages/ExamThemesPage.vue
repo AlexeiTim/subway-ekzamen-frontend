@@ -111,8 +111,7 @@ function goToPrePractivePage() {
   }
 
   if (!selectedTheme.value) return
-
-  router.push({ name: ROUTER_NAMES.SETTING_PRACTICE, params: { themeId: selectedTheme.value.id, examId: selectedTheme.value.exam.id }})
+  router.push({ name: ROUTER_NAMES.SETTING_PRACTICE, params: { themeId: selectedTheme.value.id, examId: selectedTheme.value.exam.id }, query: { is_exam: 0 }})
 }
 
 const handleSearchThemes = useDebounceFn((value: string) => {

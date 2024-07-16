@@ -1,11 +1,12 @@
 import { QuestionService } from "@/services/api/rest/questions"
+import type { Question } from "@/types/question"
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
 export const useQuestionsStore = defineStore('questions-store', () => {
   const isLoading = ref(false)
   const error = ref<any>(null)
-  const questions = ref([])
+  const questions = ref<Question[]>([])
 
   async function getQuestions(themeId: number, params: { questions_count: number }) {
     try {
@@ -18,6 +19,8 @@ export const useQuestionsStore = defineStore('questions-store', () => {
 
   return {
     getQuestions,
-    questions
+    questions,
+    error,
+    isLoading
   }
 })
