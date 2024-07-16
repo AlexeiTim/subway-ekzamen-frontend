@@ -76,7 +76,7 @@ import { ROUTER_NAMES } from '@/constants/router';
 import LayoutPractice from '@/layouts/LayoutPractice.vue';
 import { useExamsStore } from '@/stores/exam';
 import { usePracticeStore } from '@/stores/practice';
-import { useQuestionsStore } from '@/stores/question';
+import type { Question } from '@/types/question';
 import { ElMessageBox } from 'element-plus';
 import { computed, onMounted, ref } from 'vue';
 import { useModal } from 'vue-final-modal';
@@ -85,12 +85,11 @@ import { useRoute, useRouter } from 'vue-router';
 const selectedAnswer = ref()
 const router = useRouter()
 const route = useRoute()
-const questionsStore = useQuestionsStore()
 const examStore = useExamsStore()
 const practiceStore = usePracticeStore()
 const examId = +route.params.examId
 const currentQuestionsIndex = ref(0)
-const questions = ref([])
+const questions = ref<Question[]>([])
 
 const currentQuestion = computed(() => {
   return questions.value[currentQuestionsIndex.value]
@@ -168,7 +167,8 @@ function handleSelectAnswer({ id, is_correct }: {id: number, is_correct: boolean
 
 onMounted(async () => {
   const data = await examStore.getExamPractice(examId)
-  questions.value = data.questions
+  if (data)
+    questions.value = data.questions
 })
 </script>
 

@@ -86,9 +86,9 @@ const router = useRouter()
 const route = useRoute()
 const questionsStore = useQuestionsStore()
 const practiceStore = usePracticeStore()
-const questionsCount = +route.query.questions_count
+const query = route.query
+const questionsCount = query.questions_count
 const themeId = +route.params.themeId
-const examId = +route.params.examId
 const currentQuestionsIndex = ref(0)
 
 const currentQuestion = computed(() => {
@@ -140,7 +140,7 @@ function defineButtonType(answer: any) {
 }
 
 function goToNextQuestion() {
-  if (currentQuestionsIndex.value + 1 === questionsCount) {
+  if (currentQuestionsIndex.value + 1 === Number(questionsCount)) {
     router.push({ name: ROUTER_NAMES.RESULTS})
     return
   }
@@ -162,7 +162,7 @@ function handleSelectAnswer({ id, is_correct }: {id: number, is_correct: boolean
 }
 
 onMounted(() => {
-  questionsStore.getQuestions(themeId, { questions_count: questionsCount })
+  questionsStore.getQuestions(themeId, { questions_count: Number(questionsCount) })
 })
 </script>
 
