@@ -18,7 +18,7 @@ export const ROUTER_PATHES = {
   EXAM_THEMES: '/exams/:id/themes',
   PRACTICE: '/practice',
   PRE_PRACTICE: '/pre-practice',
-  SETTING_PRACTICE: '/setting-practice',
+  SETTING_PRACTICE: '/setting-practice/exam/:examId/theme/:themeId',
   RESULTS: '/results'
 }
 

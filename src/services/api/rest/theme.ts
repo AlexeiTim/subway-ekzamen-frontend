@@ -14,5 +14,11 @@ class ThemeServiceApi<T, U> extends BaseApiSerivce<T, U> {
       params
     })
   }
+
+  public async getOne(examId: number, themeId: number): Promise<BaseResponse<T>> {
+    return makeRequest({
+      url: `/exams/${examId}/themes/${themeId}`,
+    })
+  }
 }
 export const ThemeService = new ThemeServiceApi<Theme, ThemeParams>('/exam/themes')

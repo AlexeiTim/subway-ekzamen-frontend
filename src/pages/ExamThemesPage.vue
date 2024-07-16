@@ -29,6 +29,7 @@
           v-for="theme in themesStore.themes"
           :key="theme.id"
           :theme="theme"
+          @click="selectedTheme = theme"
         />
       </div>
     </template>
@@ -51,6 +52,7 @@ import ThemeItem from '@/components/ExamThemes/ThemeItem.vue';
 import { ROUTER_NAMES } from '@/constants/router';
 import LayoutDashboard from '@/layouts/LayoutDashboard.vue';
 import { useThemesStore } from '@/stores/theme';
+import type { Theme } from '@/types/theme';
 import { useDebounceFn } from '@vueuse/core';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -60,8 +62,12 @@ const router = useRouter()
 const themesStore = useThemesStore()
 const examId = +route.params.id
 const search  = ref('')
+const selectedTheme = ref<Theme | null>(null)
+
 function goToPrePractivePage() {
-  router.push({ name: ROUTER_NAMES.SETTING_PRACTICE})
+  if (!selectedTheme.value) return
+
+  router.push({ name: ROUTER_NAMES.SETTING_PRACTICE, params: { themeId: selectedTheme.value.id, examId: selectedTheme.value.exam_id }})
 }
 
 const handleSearchThemes = useDebounceFn((value: string) => {
@@ -69,7 +75,6 @@ const handleSearchThemes = useDebounceFn((value: string) => {
 }, 400)
 
 onMounted(async () => {
-  
   if (examId)
     await themesStore.getAll(examId)
 })

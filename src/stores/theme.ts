@@ -21,10 +21,20 @@ export const useThemesStore = defineStore('themes-store', () => {
     }
   }
 
+  async function getOne(examId: number, themeId: number) {
+    try {
+      const response = await ThemeService.getOne(examId, themeId)
+      return response.data
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   return {
     isLoading,
     error,
     themes,
-    getAll
+    getAll,
+    getOne
   }
 })
