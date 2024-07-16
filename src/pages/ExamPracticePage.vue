@@ -74,6 +74,7 @@
 import ModalQuestionInfo from '@/components/Practice/Modals/ModalQuestionInfo.vue';
 import { ROUTER_NAMES } from '@/constants/router';
 import LayoutPractice from '@/layouts/LayoutPractice.vue';
+import { useExamsStore } from '@/stores/exam';
 import { usePracticeStore } from '@/stores/practice';
 import { useQuestionsStore } from '@/stores/question';
 import { ElMessageBox } from 'element-plus';
@@ -85,14 +86,18 @@ const selectedAnswer = ref()
 const router = useRouter()
 const route = useRoute()
 const questionsStore = useQuestionsStore()
+const examStore = useExamsStore()
 const practiceStore = usePracticeStore()
-const questionsCount = +route.query.questions_count
-const themeId = +route.params.themeId
 const examId = +route.params.examId
 const currentQuestionsIndex = ref(0)
+const questions = ref([])
 
 const currentQuestion = computed(() => {
-  return questionsStore.questions[currentQuestionsIndex.value]
+  return questions.value[currentQuestionsIndex.value]
+})
+
+const questionsCount = computed(() => {
+  return questions.value.length
 })
 
 const currentAnswers = computed(() => {
@@ -140,7 +145,7 @@ function defineButtonType(answer: any) {
 }
 
 function goToNextQuestion() {
-  if (currentQuestionsIndex.value + 1 === questionsCount) {
+  if (currentQuestionsIndex.value + 1 === questionsCount.value) {
     router.push({ name: ROUTER_NAMES.RESULTS})
     return
   }
@@ -161,8 +166,9 @@ function handleSelectAnswer({ id, is_correct }: {id: number, is_correct: boolean
   }
 }
 
-onMounted(() => {
-  questionsStore.getQuestions(themeId, { questions_count: questionsCount })
+onMounted(async () => {
+  const data = await examStore.getExamPractice(examId)
+  questions.value = data.questions
 })
 </script>
 

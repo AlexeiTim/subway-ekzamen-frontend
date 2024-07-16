@@ -34,11 +34,25 @@ export const useExamsStore = defineStore('exam-store', () => {
       isLoading.value = false
     }
   }
+
+  async function getExamPractice(examId: number) {
+    try {
+      error.value = null
+      isLoading.value = true
+      const response = await ExamService.startExamPractice(examId)
+      return response.data
+    } catch (e) {
+      error.value = e
+    } finally {
+      isLoading.value = false
+    }
+  }
   return {
     isLoading,
     error,
     exams,
     getAll,
-    getOne
+    getOne,
+    getExamPractice
   }
 })

@@ -37,11 +37,19 @@
 
 <script setup lang="ts">
 import { ROUTER_NAMES } from '@/constants/router';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter()
+const route = useRoute()
+const questionsCount = +route.query.questions_count
+const themeId = +route.params.themeId
+const examId = +route.params.examId
 
 function goToParctice() {
-  router.push({ name: ROUTER_NAMES.PRACTICE })
+  router.push({ 
+    name: ROUTER_NAMES.PRACTICE,
+    params: { themeId, examId },
+    query: { questions_count: questionsCount }
+   })
 }
 </script>

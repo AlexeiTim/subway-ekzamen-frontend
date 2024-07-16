@@ -55,12 +55,17 @@ const selectedQuestionsCount = ref(1)
 
 
 function handleGoToPrePractice() {
-  router.push({name: ROUTER_NAMES.PRE_PRACTICE})
+  router.push({
+    name: ROUTER_NAMES.PRE_PRACTICE, 
+    params: { themeId, examId },
+    query: { questions_count: selectedQuestionsCount.value }
+   })
 }
 
 function handleSelectAllQuestions() {
   selectedQuestionsCount.value = currentTheme.value.questions_count
 }
+
 
 onMounted(async () => {
   currentTheme.value = await themesStore.getOne(examId, themeId)

@@ -5,7 +5,7 @@ import { ref } from "vue";
 export const useExamThemesPageStore = defineStore('exam-themes-page-store', () => {
   const selectedTheme = ref<Theme | null>(null)
 
-  function setSelectedTheme(theme: Theme) {
+  function setSelectedTheme(theme: Theme | null) {
     selectedTheme.value = theme
   }
 

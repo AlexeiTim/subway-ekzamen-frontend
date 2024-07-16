@@ -35,6 +35,6 @@ export const useThemesStore = defineStore('themes-store', () => {
     error,
     themes,
     getAll,
-    getOne
+    getOne,
   }
 })
