@@ -41,7 +41,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter()
 const route = useRoute()
-const questionsCount = +route.query.questions_count
+const questionsCount = Number(route.query.questions_count)
 const themeId = +route.params.themeId
 const examId = +route.params.examId
 

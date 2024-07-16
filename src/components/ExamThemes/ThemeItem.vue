@@ -9,12 +9,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { ThemeModel } from '@/models';
 import { useExamThemesPageStore } from '@/stores/pages';
+import type { Theme } from '@/types/theme';
 import { computed } from 'vue';
 
 interface Props {
-  theme: ThemeModel
+  theme: Theme
 }
 
 const props = defineProps<Props>()

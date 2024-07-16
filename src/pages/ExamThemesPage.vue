@@ -62,6 +62,7 @@ import { ROUTER_NAMES } from '@/constants/router';
 import LayoutDashboard from '@/layouts/LayoutDashboard.vue';
 import { useExamThemesPageStore } from '@/stores/pages/exam-themes-page-store';
 import { useThemesStore } from '@/stores/theme';
+import type { Theme } from '@/types/theme';
 import { useDebounceFn } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
@@ -87,7 +88,7 @@ function handleCancelSelectedTheme() {
   examSelected.value = false
 }
 
-function handleSelectTheme(theme) {
+function handleSelectTheme(theme: Theme | null) {
   selectedTheme.value = theme
   examSelected.value = false
 }
