@@ -1,6 +1,6 @@
 import { PERMISSION } from '@/constants/permissions'
 import { ROUTER_NAMES, ROUTER_PATHES } from '@/constants/router'
-import HomePage from '@/pages/HomePage.vue'
+import ExamsPage from '@/pages/ExamsPage.vue'
 import MainPage from '@/pages/MainPage.vue'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -30,7 +30,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: ROUTER_PATHES.HOME,
         name: ROUTER_NAMES.HOME,
-        component: HomePage
+        component: ExamsPage
       },
       {
         path: ROUTER_PATHES.EXAM_THEMES,

@@ -1,19 +1,21 @@
 <template>
-  <div class="layout">
+  <div class="layout flex flex-col justify-between">
     <div class="header">
       <slot name="header" />
     </div>
 
-    <div class="question border border-solid border-white">
-      <slot name="question" />
-    </div>
-    <div class="answers border border-solid border-white">
-      <ElScrollbar max-height="60vh">
-        <slot name="answers" />
-      </ElScrollbar>
+    <div class="flex-grow">
+      <div class="question border border-solid border-white">
+        <slot name="question" />
+      </div>
+      <div class="answers border border-solid border-white">
+        <ElScrollbar max-height="60vh">
+          <slot name="answers" />
+        </ElScrollbar>
+      </div>
     </div>
 
-    <div class="footer">
+    <div class="footer ">
       <div class="footer-content">
         <div class="flex-grow footer-alert">
           <slot name="footer-alert" />
@@ -42,9 +44,6 @@
 
 .footer {
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
