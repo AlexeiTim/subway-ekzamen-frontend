@@ -39,7 +39,7 @@
                 @click="toggleTypePassword"
               >
                 <View v-if="passowrdType === 'password'" />
-                <Hide v-else/>
+                <Hide v-else />
               </ElIcon>
             </template>
           </ElInput>
@@ -67,7 +67,6 @@
 <script setup lang="ts">
 import { useRegistration } from '@/composables/useRegistration'
 import { checkValidForm } from '@/helpers/form/checkValidForm'
-import { Validator } from '@/utils/validator'
 import { Hide, View } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ref } from 'vue'

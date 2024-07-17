@@ -35,8 +35,8 @@
                 class="cursor-pointer"
                 @click="toggleTypePassword"
               >
-              <View v-if="passowrdType === 'password'" />
-              <Hide v-else/>
+                <View v-if="passowrdType === 'password'" />
+                <Hide v-else />
               </ElIcon>
             </template>
           </ElInput>
