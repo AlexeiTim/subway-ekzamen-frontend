@@ -71,16 +71,16 @@
 </template>
 
 <script setup lang="ts">
-import ModalQuestionInfo from '@/components/Practice/Modals/ModalQuestionInfo.vue';
-import { ROUTER_NAMES } from '@/constants/router';
-import LayoutPractice from '@/layouts/LayoutPractice.vue';
-import { useExamsStore } from '@/stores/exam';
-import { usePracticeStore } from '@/stores/practice';
-import type { Question } from '@/types/question';
-import { ElMessageBox } from 'element-plus';
-import { computed, onMounted, ref } from 'vue';
-import { useModal } from 'vue-final-modal';
-import { useRoute, useRouter } from 'vue-router';
+import ModalQuestionInfo from '@/components/Practice/Modals/ModalQuestionInfo.vue'
+import { ROUTER_NAMES } from '@/constants/router'
+import LayoutPractice from '@/layouts/LayoutPractice.vue'
+import { useExamsStore } from '@/stores/exam'
+import { usePracticeStore } from '@/stores/practice'
+import type { Question } from '@/types/question'
+import { ElMessageBox } from 'element-plus'
+import { computed, onMounted, ref } from 'vue'
+import { useModal } from 'vue-final-modal'
+import { useRoute, useRouter } from 'vue-router'
 
 const selectedAnswer = ref()
 const router = useRouter()
@@ -103,7 +103,7 @@ const currentAnswers = computed(() => {
   return currentQuestion.value?.answers ?? []
 })
 
-const {open, close} = useModal({
+const { open, close } = useModal({
   component: ModalQuestionInfo,
   attrs: {
     onClose() {
@@ -113,7 +113,9 @@ const {open, close} = useModal({
 })
 
 const alertTitle = computed(() => {
-  return selectedAnswer.value.is_correct ? 'Вы выбрали правильный ответ' : 'Вы ошиблись! Праввильный ответ выделен зеленым'
+  return selectedAnswer.value.is_correct
+    ? 'Вы выбрали правильный ответ'
+    : 'Вы ошиблись! Праввильный ответ выделен зеленым'
 })
 
 const alertType = computed(() => {
@@ -123,15 +125,15 @@ const alertType = computed(() => {
 async function exit() {
   try {
     await ElMessageBox.confirm(
-    'Вы уверены что хотите выйти? Текущий прогресс будет утерян',
-    'Предупреждение!',
-    {
-      confirmButtonText: 'Да',
-      cancelButtonText: 'Нет',
-      type: 'warning',
-    }
-  )
-  console.log('Yes')
+      'Вы уверены что хотите выйти? Текущий прогресс будет утерян',
+      'Предупреждение!',
+      {
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Нет',
+        type: 'warning'
+      }
+    )
+    console.log('Yes')
   } catch (error) {
     console.log('No')
   }
@@ -145,19 +147,17 @@ function defineButtonType(answer: any) {
 
 function goToNextQuestion() {
   if (currentQuestionsIndex.value + 1 === questionsCount.value) {
-    router.push({ name: ROUTER_NAMES.RESULTS})
+    router.push({ name: ROUTER_NAMES.RESULTS })
     return
   }
   selectedAnswer.value = null
   currentQuestionsIndex.value += 1
 }
 
-function handleSelectAnswer({ id, is_correct }: {id: number, is_correct: boolean}) {
+function handleSelectAnswer({ id, is_correct }: { id: number; is_correct: boolean }) {
   if (selectedAnswer.value) return
-  if (is_correct)
-    practiceStore.incrementSuccessesCount()
-  else
-    practiceStore.incrementErrorsCount()
+  if (is_correct) practiceStore.incrementSuccessesCount()
+  else practiceStore.incrementErrorsCount()
 
   selectedAnswer.value = {
     id,
@@ -166,9 +166,9 @@ function handleSelectAnswer({ id, is_correct }: {id: number, is_correct: boolean
 }
 
 onMounted(async () => {
+  practiceStore.$reset()
   const data = await examStore.getExamPractice(examId)
-  if (data)
-    questions.value = data.questions
+  if (data) questions.value = data.questions
 })
 </script>
 

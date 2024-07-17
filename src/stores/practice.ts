@@ -1,5 +1,5 @@
-import { defineStore } from "pinia"
-import { ref } from "vue"
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const usePracticeStore = defineStore('practice-store', () => {
   const errorsCount = ref(0)
@@ -23,6 +23,6 @@ export const usePracticeStore = defineStore('practice-store', () => {
     successesCount,
     incrementErrorsCount,
     incrementSuccessesCount,
-    $reset,
+    $reset
   }
 })
