@@ -63,7 +63,6 @@
 <script setup lang="ts">
 import { useLogin } from '@/composables/useLogin';
 import { checkValidForm } from '@/helpers/form/checkValidForm';
-import { Validator } from '@/utils/validator';
 import { View } from '@element-plus/icons-vue';
 import type { FormInstance, FormRules } from 'element-plus';
 import { ref } from 'vue';
@@ -71,8 +70,8 @@ import { ref } from 'vue';
 const { login } = useLogin();
 
 const loginData = ref({
-  username: '',
-  password: ''
+  username: localStorage.getItem('username') || '',
+  password: localStorage.getItem('password') || ''
 });
 const passowrdType = ref('password');
 
