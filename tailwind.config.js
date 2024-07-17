@@ -5,9 +5,6 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    screens: {
-      'mobile': '360px'
-    },
     extend: {},
   },
   plugins: [],
