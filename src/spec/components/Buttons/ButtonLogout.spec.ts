@@ -1,10 +1,10 @@
-import ButtonLogout from "@/components/Buttons/ButtonLogout.vue"
-import { ROUTER_NAMES } from "@/constants/router"
+import ButtonLogout from '@/components/Buttons/ButtonLogout.vue'
+import { ROUTER_NAMES } from '@/constants/router'
 import { createTestingPinia } from '@pinia/testing'
-import { mount, type VueWrapper } from "@vue/test-utils"
+import { mount, type VueWrapper } from '@vue/test-utils'
 import ElementPlus, { ElButton } from 'element-plus'
-import { describe, expect, it, vi, type Mock } from "vitest"
-import { useRouter } from "vue-router"
+import { describe, expect, it, vi, type Mock } from 'vitest'
+import { useRouter } from 'vue-router'
 
 vi.mock('vue-router')
 const mockRouterPushFn = vi.fn()
@@ -15,7 +15,7 @@ describe('ButttonGoBack.vue', () => {
   function createComponent() {
     wrapper = mount(ButtonLogout, {
       global: {
-        plugins: [ElementPlus, createTestingPinia()],
+        plugins: [ElementPlus, createTestingPinia()]
       }
     })
   }

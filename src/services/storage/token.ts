@@ -1,4 +1,4 @@
-import { TOKEN } from "@/constants/storage";
+import { TOKEN } from '@/constants/storage'
 
 export class TokenStorage {
   setToken(token: string): void {

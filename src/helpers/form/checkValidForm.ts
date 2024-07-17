@@ -1,7 +1,7 @@
-import type { ValidateFieldsError } from "async-validator";
-import type { FormInstance } from "element-plus";
+import type { ValidateFieldsError } from 'async-validator'
+import type { FormInstance } from 'element-plus'
 
-type checkValidFormReturnValue = Promise<{ isValid: boolean, fieldErrors: ValidateFieldsError[] }>
+type checkValidFormReturnValue = Promise<{ isValid: boolean; fieldErrors: ValidateFieldsError[] }>
 
 export async function checkValidForm(formEl: FormInstance): checkValidFormReturnValue {
   let isValid = true
@@ -10,8 +10,7 @@ export async function checkValidForm(formEl: FormInstance): checkValidFormReturn
   await formEl.validate((valid, fields) => {
     if (!valid) {
       isValid = false
-      if (fields)
-        fieldErrors.push(fields)
+      if (fields) fieldErrors.push(fields)
     }
   })
 

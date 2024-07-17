@@ -8,9 +8,7 @@
       <slot name="question" />
     </div>
     <div class="answers border border-solid border-white">
-      <ElScrollbar
-        max-height="60vh"
-      >
+      <ElScrollbar max-height="60vh">
         <slot name="answers" />
       </ElScrollbar>
     </div>
@@ -58,7 +56,7 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .layout {

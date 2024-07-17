@@ -5,9 +5,7 @@
   >
     <div class="text-center flex items-center justify-center flex-col gap-[124px]">
       <div class="h-[100%]">
-        <h2
-          class="text-[82px] text-[#DBFF00]"
-        >
+        <h2 class="text-[82px] text-[#DBFF00]">
           Внимание!
         </h2>
         <h2 class="text-[82px] text-[#DBFF00]">
@@ -19,9 +17,7 @@
       </div>
 
       <div>
-        <p
-          class="text-white text-[32px]"
-        >
+        <p class="text-white text-[32px]">
           Вам будет предложено N вопросов
         </p>
         <p class="text-white text-[32px]">
@@ -36,8 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import { ROUTER_NAMES } from '@/constants/router';
-import { useRoute, useRouter } from 'vue-router';
+import { ROUTER_NAMES } from '@/constants/router'
+import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
@@ -46,10 +42,10 @@ const themeId = +route.params.themeId
 const examId = +route.params.examId
 
 function goToParctice() {
-  router.push({ 
+  router.push({
     name: ROUTER_NAMES.PRACTICE,
     params: { themeId, examId },
     query: { questions_count: questionsCount }
-   })
+  })
 }
 </script>

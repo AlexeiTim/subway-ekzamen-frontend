@@ -7,7 +7,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: ROUTER_PATHES.HOME,
     name: ROUTER_NAMES.HOME,
-    component: HomePage,
+    component: HomePage
   },
   {
     path: ROUTER_PATHES.LOGIN,
@@ -28,7 +28,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: ROUTER_PATHES.EXAM_THEMES,
     name: ROUTER_NAMES.EXAM_THEMES,
-    component: () => import('@/pages/ExamThemesPage.vue'),
+    component: () => import('@/pages/ExamThemesPage.vue')
   },
   {
     path: ROUTER_PATHES.PRACTICE,

@@ -1,6 +1,6 @@
-import { API_METHODS } from "@/constants/service";
-import { USER_ENDPOINTS } from "@/constants/user";
-import makeRequest from "../httpClient";
+import { API_METHODS } from '@/constants/service'
+import { USER_ENDPOINTS } from '@/constants/user'
+import makeRequest from '../httpClient'
 
 export class UserService {
   getCurrentUser(): Promise<any> {

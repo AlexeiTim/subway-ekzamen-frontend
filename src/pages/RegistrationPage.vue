@@ -44,7 +44,7 @@
         <ElButton
           type="primary"
           data-testid="submit-button"
-          @click="handleRegistration((formRef as FormInstance))"
+          @click="handleRegistration(formRef as FormInstance)"
         >
           Зарегестрироваться
         </ElButton>
@@ -54,11 +54,11 @@
 </template>
 
 <script setup lang="ts">
-import { useRegistration } from '@/composables/useRegistration';
-import { checkValidForm } from '@/helpers/form/checkValidForm';
-import { Validator } from '@/utils/validator';
-import type { FormInstance, FormRules } from 'element-plus';
-import { ref } from 'vue';
+import { useRegistration } from '@/composables/useRegistration'
+import { checkValidForm } from '@/helpers/form/checkValidForm'
+import { Validator } from '@/utils/validator'
+import type { FormInstance, FormRules } from 'element-plus'
+import { ref } from 'vue'
 
 const { registration } = useRegistration()
 
@@ -68,8 +68,8 @@ const registrationData = ref({
 })
 const formRef = ref<FormInstance>()
 const formRules = ref<FormRules>({
-  username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
-  password: [{ validator: Validator.notEmptyField, trigger: 'blur'}]
+  username: [{ validator: Validator.notEmptyField, trigger: 'blur' }],
+  password: [{ validator: Validator.notEmptyField, trigger: 'blur' }]
 })
 
 const handleRegistration = async (formRef: FormInstance) => {

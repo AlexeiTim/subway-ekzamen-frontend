@@ -38,7 +38,7 @@
         </span>
         <ElButton
           type="primary"
-          @click="handleLogin((formRef as FormInstance))"
+          @click="handleLogin(formRef as FormInstance)"
         >
           Войти
         </ElButton>
@@ -48,23 +48,23 @@
 </template>
 
 <script setup lang="ts">
-import { useLogin } from '@/composables/useLogin';
-import { checkValidForm } from '@/helpers/form/checkValidForm';
-import { Validator } from '@/utils/validator';
-import type { FormInstance, FormRules } from 'element-plus';
-import { ref } from 'vue';
+import { useLogin } from '@/composables/useLogin'
+import { checkValidForm } from '@/helpers/form/checkValidForm'
+import { Validator } from '@/utils/validator'
+import type { FormInstance, FormRules } from 'element-plus'
+import { ref } from 'vue'
 
 const { login } = useLogin()
 
 const loginData = ref({
-    username: '',
-    password: '',
-  })
+  username: '',
+  password: ''
+})
 
 const formRef = ref<FormInstance>()
 const formRules = ref<FormRules>({
-  username: [{ validator: Validator.notEmptyField, trigger: 'blur'}],
-  password: [{ validator: Validator.notEmptyField, trigger: 'blur'}]
+  username: [{ validator: Validator.notEmptyField, trigger: 'blur' }],
+  password: [{ validator: Validator.notEmptyField, trigger: 'blur' }]
 })
 
 const handleLogin = async (formRef: FormInstance) => {

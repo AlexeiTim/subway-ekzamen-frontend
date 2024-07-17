@@ -1,11 +1,11 @@
 import { AUTH_ENDPOINTS } from '@/constants/auth'
 import { API_METHODS } from '@/constants/service'
-import type { AuthData, LoginResponse, RegistrationReponse } from '@/types/auth'
+import type { AuthData, RegistrationReponse } from '@/types/auth'
 import makeRequest from '../httpClient'
 
 export class AuthService {
   login(data: AuthData) {
-    return makeRequest<LoginResponse>({
+    return makeRequest<{ auth_token: string }>({
       url: AUTH_ENDPOINTS.LOGIN,
       method: API_METHODS.CREATE,
       data

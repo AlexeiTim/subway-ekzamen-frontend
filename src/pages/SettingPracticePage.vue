@@ -40,11 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import { ROUTER_NAMES } from '@/constants/router';
-import { useThemesStore } from '@/stores/theme';
-import type { Theme } from '@/types/theme';
-import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ROUTER_NAMES } from '@/constants/router'
+import { useThemesStore } from '@/stores/theme'
+import type { Theme } from '@/types/theme'
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
@@ -54,20 +54,17 @@ const examId = +route.params.examId
 const currentTheme = ref<Theme | null>(null)
 const selectedQuestionsCount = ref(1)
 
-
 function handleGoToPrePractice() {
   router.push({
-    name: ROUTER_NAMES.PRE_PRACTICE, 
+    name: ROUTER_NAMES.PRE_PRACTICE,
     params: { themeId, examId },
     query: { questions_count: selectedQuestionsCount.value }
-   })
+  })
 }
 
 function handleSelectAllQuestions() {
-  if (currentTheme.value)
-    selectedQuestionsCount.value = currentTheme.value.questions_count
+  if (currentTheme.value) selectedQuestionsCount.value = currentTheme.value.questions_count
 }
-
 
 onMounted(async () => {
   const data = await themesStore.getOne(examId, themeId)

@@ -47,7 +47,7 @@
 }
 
 .empty {
-  grid-area: empty
+  grid-area: empty;
 }
 
 :deep(.el-button) {
@@ -74,8 +74,8 @@
   grid-template-rows: 100px auto;
   padding-bottom: 20px;
   grid-template-areas:
-  "title search empty"
-  "list list buttons"
+    'title search empty'
+    'list list buttons';
 }
 
 @media (max-width: 834px) {
@@ -98,17 +98,16 @@
 
   .buttons > div {
     flex-basis: 32%;
-  } 
+  }
 
   .layout {
     grid-template-columns: 12fr;
     grid-template-rows: 100px 50px 50px auto;
-    grid-template-areas: 
-    "title"
-    "buttons"
-    "search"
-    "list"
-    ;
+    grid-template-areas:
+      'title'
+      'buttons'
+      'search'
+      'list';
   }
 }
 
@@ -119,12 +118,11 @@
 
   .layout {
     grid-template-rows: 50px 50px auto 50px;
-    grid-template-areas: 
-    "title"
-    "search"
-    "list"
-    "buttons"
-    ;
+    grid-template-areas:
+      'title'
+      'search'
+      'list'
+      'buttons';
   }
 }
 </style>

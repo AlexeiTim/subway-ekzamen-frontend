@@ -5,7 +5,7 @@
       backgroundImage: `url(${IMAGES.MAIN_BACKGROUND})`
     }"
   >
-    <div class="mb-2"> 
+    <div class="mb-2">
       <slot name="header" />
     </div>
 
@@ -16,5 +16,5 @@
 </template>
 
 <script lang="ts" setup>
-import { IMAGES } from '@/constants/images';
+import { IMAGES } from '@/constants/images'
 </script>

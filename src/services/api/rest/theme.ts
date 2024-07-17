@@ -1,5 +1,5 @@
-import type { Theme } from "@/types/theme";
-import makeRequest from "../httpClient";
+import type { Theme } from '@/types/theme'
+import makeRequest from '../httpClient'
 
 class ThemeServiceApi {
   public async getAll(examId: number, params = {}) {
@@ -11,7 +11,7 @@ class ThemeServiceApi {
 
   public async getOne(examId: number, themeId: number) {
     return makeRequest<Theme>({
-      url: `/exams/${examId}/themes/${themeId}`,
+      url: `/exams/${examId}/themes/${themeId}`
     })
   }
 }

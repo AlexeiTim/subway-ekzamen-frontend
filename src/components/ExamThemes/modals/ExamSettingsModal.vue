@@ -10,19 +10,13 @@
     >
       {{ theme }}
       <h1>{{ theme.title }}</h1>
-      <ElInputNumber
-        v-model="theme.count"
-        placeholder=""
-        :min="1"
-        :max="theme.questions_count"
-      />
     </div>
   </VueFinalModalBase>
 </template>
 
 <script lang="ts" setup>
-import VueFinalModalBase from '@/components/Modals/VueFinalModalBase.vue';
-import { useThemesStore } from '@/stores/theme';
+import VueFinalModalBase from '@/components/Modals/VueFinalModalBase.vue'
+import { useThemesStore } from '@/stores/theme'
 
 const themesStore = useThemesStore()
 

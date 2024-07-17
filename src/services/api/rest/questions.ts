@@ -1,6 +1,6 @@
-import type { Question } from "@/types/question";
-import makeRequest from "../httpClient";
-import { BaseApiSerivce } from "./base";
+import type { Question } from '@/types/question'
+import makeRequest from '../httpClient'
+import { BaseApiSerivce } from './base'
 
 class QuestionApiService<T> extends BaseApiSerivce<T> {
   constructor(endpoint: string) {

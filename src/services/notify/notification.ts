@@ -1,5 +1,5 @@
-import type { Notification } from "@/types/notify"
-import { ElNotification } from "element-plus"
+import type { Notification } from '@/types/notify'
+import { ElNotification } from 'element-plus'
 
 export class NotificationService implements Notification {
   duration: number = 2000
@@ -28,4 +28,3 @@ export class NotificationService implements Notification {
     })
   }
 }
-

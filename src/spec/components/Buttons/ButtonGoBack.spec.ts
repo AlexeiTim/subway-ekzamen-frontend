@@ -1,8 +1,8 @@
-import ButtonGoBack from "@/components/Buttons/ButtonGoBack.vue"
-import { mount, type VueWrapper } from "@vue/test-utils"
+import ButtonGoBack from '@/components/Buttons/ButtonGoBack.vue'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import ElementPlus, { ElButton } from 'element-plus'
-import { describe, expect, it, vi, type Mock } from "vitest"
-import { useRouter } from "vue-router"
+import { describe, expect, it, vi, type Mock } from 'vitest'
+import { useRouter } from 'vue-router'
 
 vi.mock('vue-router')
 const mockRouterGoBackFn = vi.fn()
@@ -28,7 +28,6 @@ describe('ButttonGoBack.vue', () => {
 
     expect(wrapper.exists()).toBe(true)
   })
-
 
   it('button has text Назад', async () => {
     createComponent()

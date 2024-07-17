@@ -1,7 +1,7 @@
-import type { Exam, ExamParams } from "@/types/exam";
-import type { ExamPractice } from "@/types/exam-practice";
-import makeRequest from "../httpClient";
-import { BaseApiSerivce } from "./base";
+import type { Exam, ExamParams } from '@/types/exam'
+import type { ExamPractice } from '@/types/exam-practice'
+import makeRequest from '../httpClient'
+import { BaseApiSerivce } from './base'
 
 class ExamApiService<T, U> extends BaseApiSerivce<T, U> {
   constructor(endpoint: string) {
