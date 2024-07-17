@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[40px] bg-white flex items-center justify-center">
+  <div class="h-[40px] p-4 bg-white flex items-center justify-between">
     <div class="flex items-center gap-1">
       <ElLink
         v-for="link in links"
@@ -11,6 +11,8 @@
         {{ link.resource }}
       </ElLink>
     </div>
+    <p>© 2024 Приложение "Экзамен". Версия 1.0.</p>
+    <div />
   </div>
 </template>
 
