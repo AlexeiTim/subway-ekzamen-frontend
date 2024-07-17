@@ -1,32 +1,20 @@
 <template>
   <div class="flex items-center justify-center h-full w-full">
     <div class="rounded-xl bg-white p-4 w-[500px]">
-      <ElText
-        tag="h1"
-        class="text-center"
-      >
-        Авторизация
-      </ElText>
-      <ElForm
-        ref="formRef"
-        :model="loginData"
-        :rules="formRules"
-        label-position="top"
-      >
-        <ElFormItem
-          label="Логин"
-          prop="username"
-          data-testid="username-form-item"
-        >
+      <ElText tag="h1" class="text-center"> Авторизация </ElText>
+      <ElForm ref="formRef" :model="loginData" :rules="formRules" label-position="top">
+        <ElFormItem label="Логин" prop="username" data-testid="username-form-item">
           <ElInput v-model="loginData.username" />
         </ElFormItem>
 
-        <ElFormItem
-          label="Пароль"
-          prop="password"
-          data-testid="password-form-item"
-        >
-          <ElInput v-model="loginData.password" />
+        <ElFormItem label="Пароль" prop="password" data-testid="password-form-item">
+          <ElInput v-model="loginData.password" :type="passowrdType">
+            <template #suffix>
+              <ElIcon class="cursor-pointer" @click="toggleTypePassword">
+                <View />
+              </ElIcon>
+            </template>
+          </ElInput>
         </ElFormItem>
       </ElForm>
       <div class="flex items-center justify-between">
@@ -36,12 +24,7 @@
             <ElLink>Зарегистрироваться</ElLink>
           </RouterLink>
         </span>
-        <ElButton
-          type="primary"
-          @click="handleLogin(formRef as FormInstance)"
-        >
-          Войти
-        </ElButton>
+        <ElButton type="primary" @click="handleLogin(formRef as FormInstance)"> Войти </ElButton>
       </div>
     </div>
   </div>
@@ -51,6 +34,7 @@
 import { useLogin } from '@/composables/useLogin'
 import { checkValidForm } from '@/helpers/form/checkValidForm'
 import { Validator } from '@/utils/validator'
+import { View } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ref } from 'vue'
 
@@ -60,6 +44,11 @@ const loginData = ref({
   username: '',
   password: ''
 })
+const passowrdType = ref('password')
+
+function toggleTypePassword() {
+  passowrdType.value = passowrdType.value === 'password' ? 'text' : 'password'
+}
 
 const formRef = ref<FormInstance>()
 const formRules = ref<FormRules>({
