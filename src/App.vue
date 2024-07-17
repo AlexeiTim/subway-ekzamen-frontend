@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import AppHeader from '@/components/Common/AppHeader.vue';
-import LayoutApp from '@/layouts/LayoutApp.vue';
 import { ModalsContainer } from 'vue-final-modal';
+import { IMAGES } from '@/constants/images'
 </script>
 
 <template>
-  <LayoutApp>
-    <template #header>
-      <AppHeader />
-    </template>
-    <template #content>
-      <RouterView />
-    </template>
-  </LayoutApp>
-  <ModalsContainer />
+  <div
+    class="flex flex-col h-full"
+    :style="{
+      backgroundImage: `url(${IMAGES.MAIN_BACKGROUND})`
+    }"
+  >
+    <RouterView />
+    <ModalsContainer />
+  </div>
 </template>
