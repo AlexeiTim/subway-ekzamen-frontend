@@ -31,7 +31,18 @@
           <ElInput
             v-model="registrationData.password"
             data-testid="password-input"
-          />
+            :type="passowrdType"
+          >
+            <template #suffix>
+              <ElIcon
+                class="cursor-pointer"
+                @click="toggleTypePassword"
+              >
+                <View v-if="passowrdType === 'password'" />
+                <Hide v-else />
+              </ElIcon>
+            </template>
+          </ElInput>
         </ElFormItem>
       </ElForm>
       <div class="flex items-center justify-between">
@@ -56,7 +67,7 @@
 <script setup lang="ts">
 import { useRegistration } from '@/composables/useRegistration'
 import { checkValidForm } from '@/helpers/form/checkValidForm'
-import { Validator } from '@/utils/validator'
+import { Hide, View } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ref } from 'vue'
 
@@ -67,11 +78,15 @@ const registrationData = ref({
   password: ''
 })
 const formRef = ref<FormInstance>()
-const formRules = ref<FormRules>({
-  username: [{ validator: Validator.notEmptyField, trigger: 'blur' }],
-  password: [{ validator: Validator.notEmptyField, trigger: 'blur' }]
-})
+  const formRules = ref<FormRules>({
+  username: [{ required: true, trigger: 'blur', min: 8, message: 'Минимум 8 символов' }],
+  password: [{ required: true, trigger: 'blur', min: 8, message: 'Минимум 8 символов' }]
+});
+const passowrdType = ref('password')
 
+function toggleTypePassword() {
+  passowrdType.value = passowrdType.value === 'password' ? 'text' : 'password'
+}
 const handleRegistration = async (formRef: FormInstance) => {
   if (!formRef) return
 

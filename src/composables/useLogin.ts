@@ -21,7 +21,8 @@ export function useLogin() {
     try {
       const { data } = await authService.login(loginData)
       if (!data) return notificationService.error(ERRORS.NOT_AUTHORIZATION)
-
+      localStorage.setItem('username', loginData.username)
+      localStorage.setItem('password', loginData.password)
       setToken(data.auth_token)
     } catch (e) {
       errors.push(ERRORS.NOT_HAVE_USER)
