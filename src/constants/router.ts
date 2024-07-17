@@ -1,5 +1,6 @@
 export const ROUTER_NAMES = {
   HOME: 'home',
+  MAIN: 'main',
   ABOUT: 'about',
   LOGIN: 'login',
   REGISTRATION: 'registration',
@@ -12,7 +13,8 @@ export const ROUTER_NAMES = {
 }
 
 export const ROUTER_PATHES = {
-  HOME: '/',
+  HOME: '/exams',
+  MAIN: '/',
   ABOUT: '/about',
   LOGIN: '/login',
   REGISTRATION: '/registration',
