@@ -38,7 +38,8 @@
                 class="cursor-pointer"
                 @click="toggleTypePassword"
               >
-                <View />
+                <View v-if="passowrdType === 'password'" />
+                <Hide v-else/>
               </ElIcon>
             </template>
           </ElInput>
@@ -67,7 +68,7 @@
 import { useRegistration } from '@/composables/useRegistration'
 import { checkValidForm } from '@/helpers/form/checkValidForm'
 import { Validator } from '@/utils/validator'
-import { View } from '@element-plus/icons-vue'
+import { Hide, View } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ref } from 'vue'
 
@@ -78,10 +79,10 @@ const registrationData = ref({
   password: ''
 })
 const formRef = ref<FormInstance>()
-const formRules = ref<FormRules>({
-  username: [{ validator: Validator.notEmptyField, trigger: 'blur' }],
-  password: [{ validator: Validator.notEmptyField, trigger: 'blur' }]
-})
+  const formRules = ref<FormRules>({
+  username: [{ required: true, trigger: 'blur', min: 8, message: 'Минимум 8 символов' }],
+  password: [{ required: true, trigger: 'blur', min: 8, message: 'Минимум 8 символов' }]
+});
 const passowrdType = ref('password')
 
 function toggleTypePassword() {
